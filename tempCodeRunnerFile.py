@@ -1,0 +1,1 @@
+menu.add_cascade(label="Funções", menu=submenu)
