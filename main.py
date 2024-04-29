@@ -33,88 +33,97 @@ Xp = 0 # Escolher a unidade
 
 # Testes
 def funcao_1():
-    global L, Ni, Nf, a, b
-    # Criar labels e campos de entrada na janela principal
-    label_valor1 = tk.Label(janela, text="Largura da caixa (L) em un:")
-    label_valor1.pack()
-    entrada_valor1 = tk.Entry(janela)
-    entrada_valor1.pack()
-    L = float(entrada_valor1.get())
+    def processar_1():
+        global L, Ni, Nf, a, b
 
-    label_valor2 = tk.Label(janela, text="n inicial da particula (Ni):")
-    label_valor2.pack()
-    entrada_valor2 = tk.Entry(janela)
-    entrada_valor2.pack()
-    Ni = float(entrada_valor2.get())
-
-    label_valor3 = tk.Label(janela, text="n final da particula (Nf):")
-    label_valor3.pack()
-    entrada_valor3 = tk.Entry(janela)
-    entrada_valor3.pack()
-    Nf = float(entrada_valor3.get())
-
-    tk.Label(janela, text="P (a <= X <= b)").pack()
-
-    label_valor4 = tk.Label(janela, text="a:")
-    label_valor4.pack()
-    entrada_valor4 = tk.Entry(janela)
-    entrada_valor4.pack()
-    a = float(entrada_valor4.get())
-
-    label_valor5 = tk.Label(janela, text="b:")
-    label_valor5.pack()
-    entrada_valor5 = tk.Entry(janela)
-    entrada_valor5.pack()
-    b = float(entrada_valor5.get())
-
-
-    # ... (Adicionar outros campos de entrada se necessário)
-
-    # Função para obter e processar os valores digitados
-    def processar_valores():
-        valor1 = float(entrada_valor1.get())
-        valor2 = float(entrada_valor2.get())
+        L = float(entrada_valor1.get())
+        Ni = float(entrada_valor2.get())
+        Nf = float(entrada_valor3.get())
+        a = float(entrada_valor4.get())
+        b = float(entrada_valor5.get())
 
         # ... (Realizar cálculos ou operações com os valores)
+        # Limpar a área de saída antes de exibir a nova saída
+        text_area_saida.delete(1.0, tk.END)
 
-    # Criar botão para acionar a função de processamento
-    botao_processar = tk.Button(janela, text="Processar", command=processar_valores)
-    botao_processar.pack()
+        # Inserir a nova saída na área de texto
+        text_area_saida.insert(tk.END, "Resultados:\n")
+        # ... (Formatar e exibir os resultados dos cálculos)
+
+    # Criar frame para entrada de dados
+    frame_entrada = tk.Frame(janela)
+    frame_entrada.pack()
+
+    # Criar labels e campos de entrada
+    label_valor1 = tk.Label(frame_entrada, text="Largura da caixa (L) em un:")
+    label_valor1.grid(row=0, column=0)
+    entrada_valor1 = tk.Entry(frame_entrada)
+    entrada_valor1.grid(row=0, column=1)
+
+    label_valor2 = tk.Label(frame_entrada, text="n inicial da particula (Ni):")
+    label_valor2.grid(row=1, column=0)
+    entrada_valor2 = tk.Entry(frame_entrada)
+    entrada_valor2.grid(row=1, column=1)
+
+    label_valor3 = tk.Label(frame_entrada, text="n final da particula (Nf):")
+    label_valor3.grid(row=2, column=0)
+    entrada_valor3 = tk.Entry(frame_entrada)
+    entrada_valor3.grid(row=2, column=1)
+
+    label_valor4 = tk.Label(frame_entrada, text="a:")
+    label_valor4.grid(row=3, column=0)
+    entrada_valor4 = tk.Entry(frame_entrada)
+    entrada_valor4.grid(row=3, column=1)
+
+    label_valor5 = tk.Label(frame_entrada, text="b:")
+    label_valor5.grid(row=4, column=0)
+    entrada_valor5 = tk.Entry(frame_entrada)
+    entrada_valor5.grid(row=4, column=1)
+
+    # Criar botão de submit
+    botao_submit = tk.Button(frame_entrada, text="Processar", command=processar_1)
+    botao_submit.grid(row=5, column=0, columnspan=2)
+    # Criar frame para área de saída
+    frame_saida = tk.Frame(janela)
+    frame_saida.pack()
+
+    # Criar área de texto para exibir a saída
+    text_area_saida = tk.Text(frame_saida, width=50, height=10)
+    text_area_saida.pack()
 
 def funcao_2():
-    global L, Ni, Nf, a, b, A, k, Xp
-    # Criar labels e campos de entrada na janela principal
-    label_valor1 = tk.Label(janela, text="A em un:")
-    label_valor1.pack()
-    entrada_valor1 = tk.Entry(janela)
-    entrada_valor1.pack()
-    A = float(entrada_valor1.get())
+    def processar_2():
+        global L, Ni, Nf, a, b, A, k, Xp
 
-    label_valor2 = tk.Label(janela, text="k em un:")
-    label_valor2.pack()
-    entrada_valor2 = tk.Entry(janela)
-    entrada_valor2.pack()
-    k = float(entrada_valor2.get())
-
-    label_valor3 = tk.Label(janela, text="Xp em un:")
-    label_valor3.pack()
-    entrada_valor3 = tk.Entry(janela)
-    entrada_valor3.pack()
-    Xp = float(entrada_valor3.get())
-
-    # ... (Adicionar outros campos de entrada se necessário)
-
-    # Função para obter e processar os valores digitados
-    def processar_valores():
-        valor1 = float(entrada_valor1.get())
-        valor2 = float(entrada_valor2.get())
+        A = float(entrada_valor1.get())
+        k = float(entrada_valor2.get())
+        Xp = float(entrada_valor3.get())
 
         # ... (Realizar cálculos ou operações com os valores)
 
-    # Criar botão para acionar a função de processamento
-    botao_processar = tk.Button(janela, text="Processar", command=processar_valores)
-    botao_processar.pack()
+    # Criar frame para entrada de dados
+    frame_entrada = tk.Frame(janela)
+    frame_entrada.pack()
 
+    # Criar labels e campos de entrada
+    label_valor1 = tk.Label(frame_entrada, text="A em un:")
+    label_valor1.grid(row=0, column=0)
+    entrada_valor1 = tk.Entry(frame_entrada)
+    entrada_valor1.grid(row=0, column=1)
+
+    label_valor2 = tk.Label(frame_entrada, text="k em un:")
+    label_valor2.grid(row=1, column=0)
+    entrada_valor2 = tk.Entry(frame_entrada)
+    entrada_valor2.grid(row=1, column=1)
+
+    label_valor3 = tk.Label(frame_entrada, text="Xp em un:")
+    label_valor3.grid(row=2, column=0)
+    entrada_valor3 = tk.Entry(frame_entrada)
+    entrada_valor3.grid(row=2, column=1)
+
+    # Criar botão de submit
+    botao_submit = tk.Button(frame_entrada, text="Processar", command=processar_2)
+    botao_submit.grid(row=5, column=0, columnspan=2)
 # Janelas
 
 # Janela principal
