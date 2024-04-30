@@ -3,10 +3,19 @@
 # Matheus Ferreira de Freitas, RA: 24123080-4
 # Henrique
 
-# Importando as bibliotecas necessárias
+
+#Arrumei Os Import :)
 import tkinter as tk
 import math
-#import matplotlib.pyplot as plt
+#import matplotlib
+
+# Janela principal
+janela = tk.Tk()
+janela.title("Menu")
+
+# Variáveis globais para os frames (para poder destruí-los depois) 
+frame_entrada = None
+frame_saida = None
 
 # Constantes
 
@@ -32,25 +41,22 @@ Xp = 0 # Escolher a unidade
 # Funções
 
 # Testes
+
+
+#Essa função aqui é a resposavel por Limpar os frames (destruir) pra você não ter uma função que usao o jutsu clone das sombras
+def limpar_frames():
+    global frame_entrada, frame_saida
+    if frame_entrada:
+        frame_entrada.destroy()
+    if frame_saida:
+        frame_saida.destroy()
+
+
+#Por favor muda deixa eu Mudar o nome dessas funções de uma maneira que fiquedescrito a funcionalidade delas tipo
 def funcao_1():
-    def processar_1():
-        global L, Ni, Nf, a, b
+    global frame_entrada, frame_saida
+    limpar_frames()  # Limpa os frames existentes(pra não gerar varios clones)
 
-        L = float(entrada_valor1.get())
-        Ni = float(entrada_valor2.get())
-        Nf = float(entrada_valor3.get())
-        a = float(entrada_valor4.get())
-        b = float(entrada_valor5.get())
-
-        # ... (Realizar cálculos ou operações com os valores)
-        # Limpar a área de saída antes de exibir a nova saída
-        text_area_saida.delete(1.0, tk.END)
-
-        # Inserir a nova saída na área de texto
-        text_area_saida.insert(tk.END, "Resultados:\n")
-        # ... (Formatar e exibir os resultados dos cálculos)
-
-    # Criar frame para entrada de dados
     frame_entrada = tk.Frame(janela)
     frame_entrada.pack()
 
@@ -81,8 +87,9 @@ def funcao_1():
     entrada_valor5.grid(row=4, column=1)
 
     # Criar botão de submit
-    botao_submit = tk.Button(frame_entrada, text="Processar", command=processar_1)
+    botao_submit = tk.Button(frame_entrada, text="Processar", command=lambda: processar_1())
     botao_submit.grid(row=5, column=0, columnspan=2)
+
     # Criar frame para área de saída
     frame_saida = tk.Frame(janela)
     frame_saida.pack()
@@ -91,17 +98,27 @@ def funcao_1():
     text_area_saida = tk.Text(frame_saida, width=50, height=10)
     text_area_saida.pack()
 
+    def processar_1():
+        global L, Ni, Nf, a, b
+
+        L = float(entrada_valor1.get())
+        Ni = float(entrada_valor2.get())
+        Nf = float(entrada_valor3.get())
+        a = float(entrada_valor4.get())
+        b = float(entrada_valor5.get())
+
+        # Limpar a área de saída antes de exibir a nova saída
+        text_area_saida.delete(1.0, tk.END)
+
+        # Inserir a nova saída na área de texto
+        text_area_saida.insert(tk.END, "Resultados:\n")
+        # ... (Formatar e exibir os resultados dos cálculos)
+
+
 def funcao_2():
-    def processar_2():
-        global L, Ni, Nf, a, b, A, k, Xp
+    global frame_entrada, frame_saida
+    limpar_frames()  # Limpa os frames existentes(pra não gerar varios clones)
 
-        A = float(entrada_valor1.get())
-        k = float(entrada_valor2.get())
-        Xp = float(entrada_valor3.get())
-
-        # ... (Realizar cálculos ou operações com os valores)
-
-    # Criar frame para entrada de dados
     frame_entrada = tk.Frame(janela)
     frame_entrada.pack()
 
@@ -122,13 +139,21 @@ def funcao_2():
     entrada_valor3.grid(row=2, column=1)
 
     # Criar botão de submit
-    botao_submit = tk.Button(frame_entrada, text="Processar", command=processar_2)
+    botao_submit = tk.Button(frame_entrada, text="Processar", command=lambda: processar_2())
     botao_submit.grid(row=5, column=0, columnspan=2)
-# Janelas
 
-# Janela principal
-janela = tk.Tk()
-janela.title("Menu")
+    def processar_2():
+        global A, k, Xp
+
+        A = float(entrada_valor1.get())
+        k = float(entrada_valor2.get())
+        Xp = float(entrada_valor3.get())
+
+        # ... (Realizar cálculos ou operações com os valores)
+
+#Janelas
+
+#Janela principal
 menu = tk.Menu(janela)
 menu.add_command(label="Simulador", command=funcao_1)
 menu.add_command(label="Caixa 1D", command=funcao_2)
@@ -144,5 +169,4 @@ menu.add_command(label="Sair", command=janela.quit)
 # menu.add_cascade(label="Funções", menu=submenu)
 
 janela.config(menu=menu)
-
 janela.mainloop()
