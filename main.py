@@ -23,7 +23,7 @@ janela.title("Menu")
 # Variáveis globais para os frames (para poder destruí-los depois) 
 frame_entrada = None
 frame_saida = None
-# frame_option = None
+frame_option = None
 
 # Constantes
 hj = 6.626 * (10 ** -34)  # Constante de Planck em J.s
@@ -62,10 +62,10 @@ def limpar_frames():
         frame_entrada.destroy()
     if frame_saida:
         frame_saida.destroy()
-    # if frame_option:
-    #     frame_option.destroy()
+    if frame_option:
+        frame_option.destroy()
 
-def selecionar_opcao(opcao):
+def m_option(opcao):
     global m
     if opcao == "1":
         m = 1.67 * (10 ** -27)  
@@ -120,10 +120,16 @@ def simulador():
                                         "b: " + str(b) + "\n\n")
         # ... (Formatar e exibir os resultados dos cálculos)
 
-    global frame_entrada, frame_saida
+    global frame_entrada, frame_saida, frame_option
     limpar_frames()  # Limpa os frames existentes(pra não gerar varios clones)
-    # frame_option = tk.Frame(janela)
-    # frame_option.pack()
+    frame_option = tk.Frame(janela)
+    frame_option.pack()
+    opcao_var = tk.StringVar(frame_option)
+    opcoes = [("Próton", "1"),
+               ("Eletron", "2")]
+    for texto, valor in opcoes:
+         entrada_m = tk.Radiobutton(frame_option, text=texto, variable=opcao_var, value=valor)
+         entrada_m.pack(anchor=tk.W)
     # opcao_var = tk.StringVar(frame_option)
     # opcao_var.set("1")  # Valor padrão
 
@@ -206,6 +212,9 @@ def caixa_1d():
     def processar_2():
         global a, k, xp, l, m, n
 
+        print(m)
+        m = m_option(opcao_var.get)
+        print(m)
         a = float(entrada_a.get())
         k = float(entrada_k.get())
         xp = float(entrada_xp.get())
@@ -221,7 +230,7 @@ def caixa_1d():
                                         "Posição de x (que multiplique L): " + str(xp) + "\n\n")
         # ... (Realizar cálculos ou operações com os valores)
 
-    global frame_entrada, frame_saida
+    global frame_entrada, frame_saida, frame_option
     limpar_frames()  # Limpa os frames existentes(pra não gerar varios clones)
     # option()
     # opcao_var = tk.StringVar(frame_option)
@@ -251,7 +260,24 @@ def caixa_1d():
     # Eletron
     #
 
-    # Criar labels e campos de entrada
+    frame_option = tk.Frame(janela)
+    frame_option.pack()
+    opcao_var = tk.IntVar()
+    radio_button1 = tk.Radiobutton(frame_option, text="Próton", variable=opcao_var, value=1)
+    radio_button2 = tk.Radiobutton(frame_option, text="Eletron", variable=opcao_var, value=2)
+    radio_button1.grid(row=0, column=0, padx=10, pady=5)
+    radio_button2.grid(row=1, column=0, padx=10, pady=5)
+    # for texto, valor in opcoes:
+    #      entrada_m = tk.Radiobutton(frame_option, text=texto, variable=opcao_var, value=valor)
+    #      entrada_m.pack(anchor=tk.W)
+    # opcao_var.set("1")  # Valor padrão
+
+    # entrada_m = tk.Radiobutton(frame_option, text="Próton", variable=opcao_var, value="1")
+    # entrada_m.pack(anchor=tk.W)
+    # entrada_m = tk.Radiobutton(frame_option, text="Elétron", variable=opcao_var, value="2")
+    # entrada_m.pack(anchor=tk.W)
+
+
     label_a = tk.Label(frame_entrada, text="A em m:")
     label_a.grid(row=0, column=0)
     entrada_a = tk.Entry(frame_entrada)
