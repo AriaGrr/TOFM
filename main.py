@@ -8,6 +8,13 @@
 import tkinter as tk
 import math
 #import matplotlib
+import os
+# from math import sqrt, pi, sin
+# import tkinter as tk
+from tkinter import messagebox
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.integrate import quad
 
 # Janela principal
 janela = tk.Tk()
@@ -18,13 +25,18 @@ frame_entrada = None
 frame_saida = None
 
 # Constantes
+hj = 6.626 * (10 ** -34)  # Constante de Planck em J.s
+hev = 4.136 * (10 ** -15)  # Constante de Planck em eV.s
+c = 3 * 10 ** 8  # Velocidade da luz no vácuo em m/s
 
 # Variaveis globais
 
 # Primeira opção
-L = 0 # Largura da caixa (escolher a unidade)
-Ni = 0 # n inicial da partícula
-Nf = 0 # n final da partícula
+l = 0 # Largura da caixa (escolher a unidade)
+ni = 0 # n inicial da partícula
+nf = 0 # n final da partícula
+n = 0 # 
+
 # Dados para probabilidade 
 # P (a <= X <= b) = integral de f(x)dx de a até b
 # Restringir valores de entrada de forma que estejam dentro do poço
@@ -32,18 +44,17 @@ a = 0 # Escolher a unidade
 b = 0 # Escolher a unidade
 
 # Segunda opção
-A = 0 # Escolher a unidade
+a = 0 # Escolher a unidade
 k = 0 # Escolher a unidade
-Xp = 0 # Escolher a unidade
+xp = 0 # Escolher a unidade
 
 # Variaveis de controle
+m = 0
 
 # Funções
 
-# Testes
-
-
-#Essa função aqui é a resposavel por Limpar os frames (destruir) pra você não ter uma função que usao o jutsu clone das sombras
+# Funções de controle
+#Essa função aqui é a resposavel por Limpar os frames (destruir) pra você não ter uma função que usa o jutsu clone das sombras
 def limpar_frames():
     global frame_entrada, frame_saida
     if frame_entrada:
@@ -51,14 +62,35 @@ def limpar_frames():
     if frame_saida:
         frame_saida.destroy()
 
+# Funções de cálculo
 
-#Por favor muda deixa eu Mudar o nome dessas funções de uma maneira que fiquedescrito a funcionalidade delas tipo
-def funcao_1():
+
+# Funções de interface
+def simulador():
+    def processar_1():
+        global L, Ni, Nf, a, b
+
+        L = float(entrada_valor1.get())
+        Ni = float(entrada_valor2.get())
+        Nf = float(entrada_valor3.get())
+        a = float(entrada_valor4.get())
+        b = float(entrada_valor5.get())
+
+        # Limpar a área de saída antes de exibir a nova saída
+        text_area_saida.delete(1.0, tk.END)
+
+        # Inserir a nova saída na área de texto
+        text_area_saida.insert(tk.END, "Resultados:\n")
+        # ... (Formatar e exibir os resultados dos cálculos)
+
     global frame_entrada, frame_saida
     limpar_frames()  # Limpa os frames existentes(pra não gerar varios clones)
 
     frame_entrada = tk.Frame(janela)
     frame_entrada.pack()
+
+    label_intro = tk.Label(frame_entrada, text="Introdução")
+    label_intro.grid(row=0, column=0)
 
     # Criar labels e campos de entrada
     label_valor1 = tk.Label(frame_entrada, text="Largura da caixa (L) em un:")
@@ -98,27 +130,19 @@ def funcao_1():
     text_area_saida = tk.Text(frame_saida, width=50, height=10)
     text_area_saida.pack()
 
-    def processar_1():
-        global L, Ni, Nf, a, b
 
-        L = float(entrada_valor1.get())
-        Ni = float(entrada_valor2.get())
-        Nf = float(entrada_valor3.get())
-        a = float(entrada_valor4.get())
-        b = float(entrada_valor5.get())
+def caixa_1d():
+    def processar_2():
+            global A, k, Xp
 
-        # Limpar a área de saída antes de exibir a nova saída
-        text_area_saida.delete(1.0, tk.END)
+            A = float(entrada_valor1.get())
+            k = float(entrada_valor2.get())
+            Xp = float(entrada_valor3.get())
 
-        # Inserir a nova saída na área de texto
-        text_area_saida.insert(tk.END, "Resultados:\n")
-        # ... (Formatar e exibir os resultados dos cálculos)
+            # ... (Realizar cálculos ou operações com os valores)
 
-
-def funcao_2():
     global frame_entrada, frame_saida
     limpar_frames()  # Limpa os frames existentes(pra não gerar varios clones)
-
     frame_entrada = tk.Frame(janela)
     frame_entrada.pack()
 
@@ -142,21 +166,18 @@ def funcao_2():
     botao_submit = tk.Button(frame_entrada, text="Processar", command=lambda: processar_2())
     botao_submit.grid(row=5, column=0, columnspan=2)
 
-    def processar_2():
-        global A, k, Xp
+    # Criar frame para área de saída
+    frame_saida = tk.Frame(janela)
+    frame_saida.pack()
 
-        A = float(entrada_valor1.get())
-        k = float(entrada_valor2.get())
-        Xp = float(entrada_valor3.get())
+    # Criar área de texto para exibir a saída
+    text_area_saida = tk.Text(frame_saida, width=50, height=10)
+    text_area_saida.pack()
 
-        # ... (Realizar cálculos ou operações com os valores)
-
-#Janelas
-
-#Janela principal
+# Janela principal
 menu = tk.Menu(janela)
-menu.add_command(label="Simulador", command=funcao_1)
-menu.add_command(label="Caixa 1D", command=funcao_2)
+menu.add_command(label="Simulador", command=simulador)
+menu.add_command(label="Caixa 1D", command=caixa_1d)
 menu.add_separator()  # Adiciona uma linha separadora
 menu.add_command(label="Sair", command=janela.quit)
 
