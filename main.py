@@ -89,11 +89,22 @@ def simulador():
     frame_entrada = tk.Frame(janela)
     frame_entrada.pack()
 
-    label_intro = tk.Label(frame_entrada, text="Introdução")
-    label_intro.grid(row=0, column=0)
+    # COLOCAR UM TEXTO DE INTRODUÇÃO AQUI
+    #
+    # ~ Escrever a introdução ~
+    #
+
+    # COLOCAR UM OPTIONAL TEXT AQUI
+    #
+    # Texto: "Qual a particula que deseja analisar? "
+    #
+    # Próton
+    # Eletron
+    #
 
     # Criar labels e campos de entrada
-    label_valor1 = tk.Label(frame_entrada, text="Largura da caixa (L) em un:")
+    # Caixa = poço de potencial infinito
+    label_valor1 = tk.Label(frame_entrada, text="Largura da caixa (L) em m:")
     label_valor1.grid(row=0, column=0)
     entrada_valor1 = tk.Entry(frame_entrada)
     entrada_valor1.grid(row=0, column=1)
@@ -108,11 +119,19 @@ def simulador():
     entrada_valor3 = tk.Entry(frame_entrada)
     entrada_valor3.grid(row=2, column=1)
 
+    # COLOCAR OUTRO TEXTO AQUI
+    # 
+    # Dados para probabilidade
+    # P (a <= X <= b) = integral de f(x)dx de a até b
+    #
+
+    # a = inicio do intervalo
     label_valor4 = tk.Label(frame_entrada, text="a:")
     label_valor4.grid(row=3, column=0)
     entrada_valor4 = tk.Entry(frame_entrada)
     entrada_valor4.grid(row=3, column=1)
 
+    # b = fim do intervalo
     label_valor5 = tk.Label(frame_entrada, text="b:")
     label_valor5.grid(row=4, column=0)
     entrada_valor5 = tk.Entry(frame_entrada)
@@ -146,18 +165,26 @@ def caixa_1d():
     frame_entrada = tk.Frame(janela)
     frame_entrada.pack()
 
+    # COLOCAR UM OPTIONAL TEXT AQUI
+    #
+    # Texto: "Qual a particula que deseja analisar? "
+    #
+    # Próton
+    # Eletron
+    #
+
     # Criar labels e campos de entrada
-    label_valor1 = tk.Label(frame_entrada, text="A em un:")
+    label_valor1 = tk.Label(frame_entrada, text="A em m:")
     label_valor1.grid(row=0, column=0)
     entrada_valor1 = tk.Entry(frame_entrada)
     entrada_valor1.grid(row=0, column=1)
 
-    label_valor2 = tk.Label(frame_entrada, text="k em un:")
+    label_valor2 = tk.Label(frame_entrada, text="k em m:")
     label_valor2.grid(row=1, column=0)
     entrada_valor2 = tk.Entry(frame_entrada)
     entrada_valor2.grid(row=1, column=1)
 
-    label_valor3 = tk.Label(frame_entrada, text="Xp em un:")
+    label_valor3 = tk.Label(frame_entrada, text="Posição de x (que multiplique L):")
     label_valor3.grid(row=2, column=0)
     entrada_valor3 = tk.Entry(frame_entrada)
     entrada_valor3.grid(row=2, column=1)
