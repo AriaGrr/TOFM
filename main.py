@@ -23,7 +23,7 @@ janela.title("Menu")
 # Variáveis globais para os frames (para poder destruí-los depois) 
 frame_entrada = None
 frame_saida = None
-frame_option = None
+# frame_option = None
 
 # Constantes
 hj = 6.626 * (10 ** -34)  # Constante de Planck em J.s
@@ -62,8 +62,8 @@ def limpar_frames():
         frame_entrada.destroy()
     if frame_saida:
         frame_saida.destroy()
-    if frame_option:
-        frame_option.destroy()
+    # if frame_option:
+    #     frame_option.destroy()
 
 def m_option(opcao):
     global m
@@ -101,11 +101,11 @@ def simulador():
     def processar_1():
         global L, Ni, Nf, a, b
 
-        L = float(entrada_valor1.get())
-        Ni = float(entrada_valor2.get())
-        Nf = float(entrada_valor3.get())
-        a = float(entrada_valor4.get())
-        b = float(entrada_valor5.get())
+        L = float(entrada_l.get())
+        Ni = float(entrada_ni.get())
+        Nf = float(entrada_nf.get())
+        a = float(entrada_a.get())
+        b = float(entrada_b.get())
 
         # Limpar a área de saída antes de exibir a nova saída
         text_area_saida.delete(1.0, tk.END)
@@ -186,19 +186,19 @@ def simulador():
     # Criar labels e campos de entrada
     # Caixa = poço de potencial infinito
     label_l = tk.Label(frame_entrada, text="Largura da caixa (L) em m:")
-    label_l.grid(row=0, column=0)
+    label_l.grid(row=1, column=0)
     entrada_l = tk.Entry(frame_entrada)
-    entrada_l.grid(row=0, column=1)
+    entrada_l.grid(row=1, column=1)
 
     label_ni = tk.Label(frame_entrada, text="n inicial da particula (Ni):")
-    label_ni.grid(row=1, column=0)
+    label_ni.grid(row=2, column=0)
     entrada_ni = tk.Entry(frame_entrada)
-    entrada_ni.grid(row=1, column=1)
+    entrada_ni.grid(row=2, column=1)
 
     label_nf = tk.Label(frame_entrada, text="n final da particula (Nf):")
-    label_nf.grid(row=2, column=0)
+    label_nf.grid(row=3, column=0)
     entrada_nf = tk.Entry(frame_entrada)
-    entrada_nf.grid(row=2, column=1)
+    entrada_nf.grid(row=3, column=1)
 
     # COLOCAR OUTRO TEXTO AQUI
     # 
@@ -208,19 +208,19 @@ def simulador():
 
     # a = inicio do intervalo
     label_a = tk.Label(frame_entrada, text="a:")
-    label_a.grid(row=3, column=0)
+    label_a.grid(row=4, column=0)
     entrada_a = tk.Entry(frame_entrada)
-    entrada_a.grid(row=3, column=1)
+    entrada_a.grid(row=4, column=1)
 
     # b = fim do intervalo
-    label_valor5 = tk.Label(frame_entrada, text="b:")
-    label_valor5.grid(row=4, column=0)
-    entrada_valor5 = tk.Entry(frame_entrada)
-    entrada_valor5.grid(row=4, column=1)
+    label_b = tk.Label(frame_entrada, text="b:")
+    label_b.grid(row=5, column=0)
+    entrada_b = tk.Entry(frame_entrada)
+    entrada_b.grid(row=5, column=1)
 
     # Criar botão de submit
     botao_submit = tk.Button(frame_entrada, text="Processar", command=lambda: processar_1())
-    botao_submit.grid(row=5, column=0, columnspan=2)
+    botao_submit.grid(row=6, column=0, columnspan=2)
 
     # Criar frame para área de saída
     frame_saida = tk.Frame(janela)
