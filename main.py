@@ -318,6 +318,18 @@ def caixa_1d():
     text_area_saida = tk.Text(frame_saida, width=50, height=10)
     text_area_saida.pack()
 
+def conversores():
+    def processar_3():
+        print("Processar")
+    limpar_frames()
+    frame_entrada = tk.Frame(janela)
+    frame_entrada.pack()
+
+    
+    frame_saida = tk.Frame(janela)
+    frame_saida.pack()
+    text_area_saida = tk.Text(frame_saida, width=50, height=10)
+    text_area_saida.pack()
 # def create_animation_window():
 #     new_window = tk.Toplevel(janela)
 #     fig, ax = plt.subplots()
@@ -325,19 +337,37 @@ def caixa_1d():
 
 # Janela principal
 menu = tk.Menu(janela)
-menu.add_command(label="Simulador", command=simulador)
-menu.add_command(label="Caixa 1D", command=caixa_1d)
+# menu.add_command(label="Simulador", command=simulador)
+# menu.add_command(label="Caixa 1D", command=caixa_1d)
+# menu.add_command(label="Conversores", command=conversores)
+
+submenu_simulador = tk.Menu(menu, tearoff=0)
+submenu_simulador.add_command(label="Normal", command=simulador)
+submenu_simulador.add_command(label="Pop-Up", command=lambda: print("Teste 1"))  # Função lambda simples
+
+menu.add_cascade(label="Simulador", menu=submenu_simulador)
+
+submenu_caixa = tk.Menu(menu, tearoff=0)
+submenu_caixa.add_command(label="Normal", command=caixa_1d)
+submenu_caixa.add_command(label="Pop-Up", command=lambda: print("Teste 1"))  # Função lambda simples
+
+menu.add_cascade(label="Caixa 1D", menu=submenu_caixa)
+
+# # Janela secundária
+submenu_conversores = tk.Menu(menu, tearoff=0)
+submenu_conversores.add_command(label="m / cm / nm / km / mm / um / pm", command=lambda: print("Teste"))
+submenu_conversores.add_command(label="eV / J / cal / kcal / BTU / kWh / Wh", command=lambda: print("Teste 1"))  # Função lambda simples
+submenu_conversores.add_command(label="Hz / kHz / MHz / GHz / THz", command=lambda: print("Teste 2"))
+
+menu.add_cascade(label="Conversores", menu=submenu_conversores)
+
+
+
+
+
+# janela.config(menu=menu)
+# janela.mainloop()
 menu.add_separator()  # Adiciona uma linha separadora
 menu.add_command(label="Sair", command=janela.quit)
-janela.config(menu=menu)
-janela.mainloop()
-# # Janela secundária
-# submenu = tk.Menu(menu, tearoff=0)
-# submenu.add_command(label="Teste", command=teste3)
-# submenu.add_command(label="Teste 1", command=lambda: print("Teste 1"))  # Função lambda simples
-# submenu.add_command(label="Teste 2", command=lambda: print("Teste 2"))
-
-# menu.add_cascade(label="Funções", menu=submenu)
-
 janela.config(menu=menu)
 janela.mainloop()
