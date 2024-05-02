@@ -34,9 +34,7 @@ from tkinter import messagebox
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
-
-
-
+from scipy.integrate import quad
 
 # Configuração inicial: Janela principal e declaração de variáveis e constantes
 janela = tk.Tk()
@@ -59,7 +57,6 @@ n = 0
 
 a = 0  # Limite inferior para probabilidade
 b = 0  # Limite superior para probabilidade
-A = 0  # Amplitude em metros
 k = 0  # Número de onda em metros
 xp = 0  # Posição x em metros
 
@@ -67,8 +64,6 @@ xp = 0  # Posição x em metros
 m = 1.67 * (10 ** -27)  # Inicializando como próton
 
 # Funções
-
-# Furtos 
 
 # Função para calcular a energia inicial
 def ei_j():
@@ -136,12 +131,12 @@ def kf():
     return kf
 
 # Função para calcular a amplitude
-def l():
+def l_func():
     l = 2 / a ** 2
     return l
 
 # Função para calcular o número de onda
-def n():
+def n_func():
     n = round((k * l) / pi)
     return n
 
@@ -202,22 +197,11 @@ def labels_and_entries(parent, process_func):
 
     tk.Button(parent, text="Processar", command=process_func).grid(row=9, column=0, columnspan=2)
 
-#Mudei a atualização da variável global 'm', que representa a massa
-#da partícula,corrigi para garantir que os valor seja atualizado 
-#adequadamente conforme a escolha nos Radiobuttons. 
-
-#Implementei um rastreador ('trace') na variável StringVar associada, 
-#que dispara a função m_option sempre que a seleção muda, só pra 
-#garantir que a massa fique com a opção certa. 
-
-#Além disso, eu limpei o codigo pra melhorar a organização, desculpa 
-#se agluma função de anotação foi excluida como alguma não faziam #nada eu as removi
-
 # Funções de interface
 def simulador():
     global m, frame_entrada, frame_saida
     def processar_1():
-        global l, ni, nf, a, b
+        global l, ni, nf, a, b, m
         try:
             l = float(entrada_l.get())
             ni = float(entrada_ni.get())
@@ -280,43 +264,27 @@ def simulador():
     text_area_saida = tk.Text(frame_saida, width=50, height=10)
     text_area_saida.pack()
 
-#Removi duplicações desnecessárias dos widgets, como a recriação de Radiobuttons e Frames
-
-#Mudei a atualização da variável global 'm', que representa a massa da partícula
-
-#Implementei um rastreador ('trace') na variável StringVar associada, que dispara a função
-#m_option sempre que a seleção muda
-
-#organizei o código para melhorar a clareza
-
-#Limpei a estrutura dos frames e dos widgets, removendo blocos de código comentados que não eram
-#utilizados
-
-#Atualizei e simplifiquei a função processar_2 para coletar entradas, limpar a área de saída, e 
-#preparar para exibição dos resultados
-
-
 # Função para a caixa 1D
 def caixa_1d():
     global m, frame_entrada, frame_saida
     def processar_2():
-        global A, k, xp, l, m
+        global a, k, xp, l, m, n
         try:
-            A = float(entrada_a.get())
+            a = float(entrada_a.get())
             k = float(entrada_k.get())
             xp = float(entrada_xp.get())
 
-            l = l()
-            n = n()
-            prob = probalidade_2()
-
+            l = l_func()
+            n = n_func()
+            p = probalidade_2()
+            # prob = 2 / l * (sin(n * pi * xp) ** 2)
             text_area_saida.delete(1.0, tk.END)
             text_area_saida.insert(tk.END, f"Entradas:\n----------------\nMassa: {m} kg\n"
-                                           f"A: {A} m\nk: {k} m^-1\nPosição de x (que multiplique L): {xp}\n\n"
+                                           f"A: {a} m\nk: {k} m^-1\nPosição de x (que multiplique L): {xp}\n"
                                            "----------------\nResultados:\n----------------\n"
                                            f"Largura da caixa: {l:.4e} m\n"
                                            f"Número quântico da partícula: {n}\n"
-                                           f"Probabilidade de encontrar a partícula na posição {xp}: {prob:.4e}\n")
+                                           f"Probabilidade de encontrar a partícula na posição {xp}: {p:.3}\n")
         except ValueError as e:
             messagebox.showerror("Erro de Entrada", "Por favor, insira valores numéricos válidos.")
     m = 1.67 * (10 ** -27)
@@ -350,17 +318,10 @@ def caixa_1d():
     text_area_saida = tk.Text(frame_saida, width=50, height=10)
     text_area_saida.pack()
 
-
 # def create_animation_window():
 #     new_window = tk.Toplevel(janela)
 #     fig, ax = plt.subplots()
 #     x=np.linspace(0,1,1000)
-    
-
-
-
-
-
 
 # Janela principal
 menu = tk.Menu(janela)
@@ -380,6 +341,3 @@ janela.mainloop()
 
 janela.config(menu=menu)
 janela.mainloop()
-
-
-
