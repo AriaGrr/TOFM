@@ -20,7 +20,9 @@ janela.title("Menu")
 frame_entrada = None
 frame_saida = None
 
-# Variáveis Gerais
+# Variáveis Globais
+
+# Constantes
 hj = 6.626 * (10 ** -34)  # Constante de Planck em J.s
 hev = 4.136 * (10 ** -15)  # Constante de Planck em eV.s
 c = 3 * 10 ** 8  # Velocidade da luz no vácuo em m/s
@@ -40,7 +42,181 @@ xp = 0  # Posição x em metros
 # Variável de controle de massa
 m = 1.67 * (10 ** -27)  # Inicializando como próton
 
+# Variaveis de controle de conversão
+num = 0 # Número 
+num_c = 0 # Número convertido 1
+num_c2 = 0 # Número convertido 2
+
 # Funções
+
+# Funções para conversões
+# Todos os conversores vão para uma unidade padrão e depois convertem para a unidade desejada
+
+# Conversor de eV -> J
+def eV_J(num):
+    #num_c = num * 1.60217662 * (10 ** -19)
+    # num_c = num * 1.602 * (10 ** -19)
+    num_c = num * 1.6022e-19
+    return num_c
+
+# Conversor de J -> eV
+def J_eV(num):
+    #num_c = num / 1.60217662 * (10 ** -19)
+    # num_c = num / 1.602 * (10 ** -19)
+    num_c = num * 6.242e+18
+    return num_c
+
+# Conversor de eV -> cal
+def eV_cal(num):
+    num_c = num * 2.3900573613767 * (10 ** 20)
+    return num_c
+
+# Conversor de cal -> eV
+def cal_eV(num):
+    num_c = num / 2.3900573613767 * (10 ** 20)
+    return num_c
+
+# Conversor de eV -> kcal
+def eV_kcal(num):
+    num_c = num * 2.3900573613767 * (10 ** 17)
+    return num_c
+
+# Conversor de kcal -> eV
+def kcal_eV(num):
+    num_c = num / 2.3900573613767 * (10 ** 17)
+    return num_c
+
+# Conversor de eV -> BTU
+def eV_Btu(num):
+    num_c = num * 3.826733324 * (10 ** 19)
+    return num_c
+
+# Conversor de BTU -> eV
+def Btu_eV(num):
+    num_c = num / 3.826733324 * (10 ** 19)
+    return num_c
+
+# Conversor de eV -> kWh
+def eV_kWh(num):
+    num_c = num * 2.7777777777778 * (10 ** -7)
+    return num_c
+
+# Conversor de kWh -> eV
+def kWh_eV(num):
+    num_c = num / 2.7777777777778 * (10 ** -7)
+    return num_c
+
+# Conversor de eV -> Wh
+def eV_Wh(num):
+    num_c = num * 3.6 * (10 ** -6)
+    return num_c
+
+# Conversor de eV -> Wh
+def Wh_eV(num):
+    num_c = num / 3.6 * (10 ** -6)
+    return num_c
+
+# Conversor de metros -> nm
+def metros_nm(num):
+    num_c = num * 1e9
+    return num_c
+
+# Conversor de nm -> metros
+def nm_metros(num):
+    num_c = num / 1e9
+    return num_c
+
+# Conversor de metros -> cm
+def metros_cm(num):
+    num_c = num * 100
+    return num_c
+
+# Conversor de cm -> metros
+def cm_metros(num):
+    num_c = num / 100
+    return num_c
+
+# Conversor de metros -> km
+def metros_km(num):
+    num_c = num / 1000
+    return num_c
+
+# Conversor de km -> metros
+def km_metros(num):
+    num_c = num * 1000
+    return num_c
+
+# Conversor de metros -> mm
+def metros_mm(num):
+    num_c = num * 1000
+    return num_c
+
+# Conversor de mm -> metros
+def mm_metros(num):
+    num_c = num / 1000
+    return num_c
+
+# Conversor de metros -> um
+def metros_um(num):
+    num_c = num * 1e6
+    return num_c
+
+# Conversor de um -> metros
+def um_metros(num):
+    num_c = num / 1e6
+    return num_c
+
+# Conversor de metros -> pm
+def metros_pm(num):
+    num_c = num * 1e12
+    return num_c
+
+# Conversor de pm -> metros
+def pm_metros(num):
+    num_c = num / 1e12
+    return num_c
+
+# Conversor de Hz -> kHz
+def Hz_kHz(num):
+    num_c = num / 1e3
+    return num_c
+
+# Conversor de kHz -> Hz
+def kHz_Hz(num):
+    num_c = num * 1e3
+    return num_c
+
+# Conversor de Hz -> MHz
+def Hz_MHz(num):
+    num_c = num / 1e6
+    return num_c
+
+# Conversor de MHz -> Hz
+def MHz_Hz(num):
+    num_c = num * 1e6
+    return num_c
+
+# Conversor de Hz -> GHz
+def Hz_GHz(num):
+    num_c = num / 1e9
+    return num_c
+
+# Conversor de GHz -> Hz
+def GHz_Hz(num):
+    num_c = num * 1e9
+    return num_c
+
+# Conversor de Hz -> THz
+def Hz_THz(num):
+    num_c = num / 1e12
+    return num_c
+
+# Conversor de THz -> Hz
+def THz_Hz(num):
+    num_c = num * 1e12
+    return num_c
+
+# Funções de cálculos
 
 # Função para calcular a energia inicial
 def ei_j():
