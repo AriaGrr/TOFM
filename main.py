@@ -434,7 +434,7 @@ def simulador():
     text_area_saida.pack()
 
 def simulador_2():
-    global m, frame_entrada, frame_saida
+    global m
     def processar_1():
         global l, ni, nf, a, b, m
         try:
@@ -576,7 +576,7 @@ def caixa_1d():
     text_area_saida.pack()
 
 def caixa_1d_2():
-    global m, frame_entrada, frame_saida
+    global m
     def processar_2():
         global a, k, xp, l, m, n
         try:
@@ -648,7 +648,10 @@ def conversor_1():
     # StringVar to hold the selected option
     selected_value1 = tk.StringVar()
     selected_value1.set(option_out[0])  # Set initial selection
+    container = tk.Frame(janela)
+    container.place(x=50, y=100)  # Position the container at (50, 100)
 
+    dropdown.pack() 
     # Create the dropdown menu
     dropdown = tk.OptionMenu(conversor, selected_value, *option_entry, command=selected_option)
     dropdown = tk.OptionMenu(conversor, selected_value1, *option_out, command=selected_option)
