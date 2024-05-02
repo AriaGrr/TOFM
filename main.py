@@ -10,7 +10,9 @@
 # ⠀⠀⢰⣶⣿⡟⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⢙⣿⣿⣿⣿⣿⣿⣿⣶⡀⠀⠀⠀⠀⠀
 # ⠀⢠⣼⣿⠿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⠂⠁⠀⠘⣿⣿⡇⠀⠀⠀⠀
 # ⢀⣸⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⢩⠁⠀⠀⠀⣿⣿⡇⠀⠀⠀⠀
-# ⣿⣿⣯⠀⠀⠀⣤⣴⣶⣶⣤⣦⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣤⣴⣶⣴⣦⡆⣼⣿⢘⠀⠀⠀⢰⣿⣿⡇⠀⠀⠀⠀
+# ⣿⣿⣯⠀⠀⠀⣤⣴⣶⣶⣤⣦⢀+
+
+#⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣤⣴⣶⣴⣦⡆⣼⣿⢘⠀⠀⠀⢰⣿⣿⡇⠀⠀⠀⠀
 # ⣿⣿⣟⠐⠀⣿⡏⠉⠈⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⢐⣿⠏⠉⢩⣿⣿⣿⣿⡿⢆⣰⣿⣿⣿⣿⣿⣷⣷⣀⠀⠀
 # ⣿⣿⣿⢤⠀⣿⣷⣤⣤⣿⣿⣿⣿⢨⣶⣴⣶⣶⣶⣶⣶⣶⣿⣿⣦⣤⣼⣿⣿⣿⣏⡓⠸⣿⡟⡛⠛⠛⣛⣿⣿⣿⠀⢀
 # ⠀⢸⣿⣿⣶⡹⡏⠀⠁⠈⠀⠹⠿⠘⣿⣧⣀⣀⣠⣀⣼⣿⠃⠿⠏⠩⢡⣼⣿⡿⠟⣿⣿⠋⠅⠀⠀⠀⠀⠀⢹⣿⣿⣿
@@ -170,7 +172,7 @@ def m_option(opcao):
 
 # Esta função foi criada para consolidar e simplificar a criação de labels e entradas(mta label slc)
 
-def labels_and_entries(parent, process_func):
+def labels_and_entries(parent):
     global entrada_l, entrada_ni, entrada_nf, entrada_a, entrada_b
     entrada_l = tk.Entry(parent)
 
@@ -194,8 +196,6 @@ def labels_and_entries(parent, process_func):
     entrada_b = tk.Entry(parent)
     tk.Label(parent, text="b:").grid(row=8, column=0)
     entrada_b.grid(row=8, column=1)
-
-    tk.Button(parent, text="Processar", command=process_func).grid(row=9, column=0, columnspan=2)
 
 # Funções de interface
 def simulador():
@@ -247,6 +247,13 @@ def simulador():
             # plot_probability_distribution(a, b, ni, nf, l)
         except ValueError:
             messagebox.showerror("Erro de Entrada", "Por favor, insira valores numéricos válidos.")
+
+    def graficos():
+        print("Gráficos")
+
+    def simular():
+        print("Simulação")
+
     m = 1.67 * (10 ** -27)
     limpar_frames()
     frame_entrada = tk.Frame(janela)
@@ -258,11 +265,110 @@ def simulador():
     m_opcao.trace("w", lambda *args: m_option(m_opcao.get()))
     tk.Radiobutton(frame_entrada, text="Próton", variable=m_opcao, value="1").grid(row=2, column=0, padx=10, pady=6)
     tk.Radiobutton(frame_entrada, text="Elétron", variable=m_opcao, value="2").grid(row=2, column=1, padx=10, pady=5)
-    labels_and_entries(frame_entrada, processar_1)
+    labels_and_entries(frame_entrada)
+
+    # Arrumar os botões
+    # Colocar os gráficos
+    tk.Button(frame_entrada, text="Gráficos", command=processar_1).grid(row=9, column=0, columnspan=1)
+
+    # Colocar a simulação 
+    tk.Button(frame_entrada, text="Simular", command=simular).grid(row=9, column=1, columnspan=1)
+
+    tk.Button(frame_entrada, text="Processar", command=graficos).grid(row=9, column=2, columnspan=1)
+    #
+
     frame_saida = tk.Frame(janela)
     frame_saida.pack()
     text_area_saida = tk.Text(frame_saida, width=50, height=10)
     text_area_saida.pack()
+
+def simulador_2():
+    global m, frame_entrada, frame_saida
+    def processar_1():
+        global l, ni, nf, a, b, m
+        try:
+            l = float(entrada_l.get())
+            ni = float(entrada_ni.get())
+            nf = float(entrada_nf.get())
+            a = float(entrada_a.get())
+            b = float(entrada_b.get())
+
+            eij = ei_j()
+            eiev = ei_ev()
+            efj = ef_j()
+            efev = ef_ev()
+            E = e_f()
+            lam = lamb()
+            f = freq()
+            vi = vi()
+            vf = vf()
+            ci = ci()
+            cf = cf()
+            ki = ki()
+            kf = kf()
+            area = sqrt(2/l)
+            i = probabilidade(a, b, ni, l)
+            f = probabilidade(a, b, nf, l)
+
+            text_area_saida.delete(1.0, tk.END)
+            text_area_saida.insert(tk.END, f"Resultados:\n----------------\nMassa: {m} kg\n"
+                                           f"Largura da caixa (L): {l} m\n"
+                                           f"n inicial da partícula (Ni): {ni}\n"
+                                           f"n final da partícula (Nf): {nf}\n"
+                                           f"a: {a}\n"
+                                           f"b: {b}\n"f"ψ{ni} (x) = {area:.4e} . sen({(ki):.4e}.x)\n"
+                                  f"ψ{nf} (x) = {area:.4e} . sen({(kf):.4e}.x)\n"
+                                  f"E{ni} = {eij:.4e} J ou {eiev:.4e} eV\n"
+                                  f"E{nf} = {efj:.4e} J ou {efev:.4e} eV\n"
+                                  f"Efoton = {E:.4e} eV\n"
+                                  f"Comprimento de onda do fóton = {lam:.4e} m\n"
+                                  f"Frequência do fóton = {f:.4e} Hz\n"
+                                  f"Velocidade da partícula:\nn = {ni}: v = {vi:.4e} m/s\tn = {nf}: v = {vf:.4e} m/s\n"
+                                  f"Comprimento de onda de De Broglie:\nn = {ni}: ƛ = {ci:.4e} m\tn = {nf}: ƛ = {cf:.4e} m\n"
+                                  f"A probabilidade da partícula estar entre {a:.4e} e {b:.4e} no nível {ni} é de {i*100:.3f} %\n"
+                                  f"A probabilidade da partícula estar entre {a:.4e} e {b:.4e} no nível {nf} é de {f*100:.3f} %\n")
+            # plot_wave_functions(a, b, ni, nf, l)
+            # plot_probability_distribution(a, b, ni, nf, l)
+        except ValueError:
+            messagebox.showerror("Erro de Entrada", "Por favor, insira valores numéricos válidos.")
+
+    def graficos():
+        print("Gráficos")
+
+    def simular():
+        print("Simulação")
+
+    m = 1.67 * (10 ** -27)
+
+    simulador = tk.Tk()
+    simulador.title("Simulador")
+
+    frame_entrada = tk.Frame(simulador)
+    frame_entrada.pack()
+
+    tk.Label(frame_entrada, text="Introdução\n").grid(row=0, column=1)
+
+    m_opcao = tk.StringVar(frame_entrada, "1")
+    m_opcao.trace("w", lambda *args: m_option(m_opcao.get()))
+    tk.Radiobutton(frame_entrada, text="Próton", variable=m_opcao, value="1").grid(row=2, column=0, padx=10, pady=6)
+    tk.Radiobutton(frame_entrada, text="Elétron", variable=m_opcao, value="2").grid(row=2, column=1, padx=10, pady=5)
+    labels_and_entries(frame_entrada)
+
+    # Arrumar os botões
+    # Colocar os gráficos
+    tk.Button(frame_entrada, text="Gráficos", command=processar_1).grid(row=9, column=0, columnspan=1)
+
+    # Colocar a simulação 
+    tk.Button(frame_entrada, text="Simular", command=simular).grid(row=9, column=1, columnspan=1)
+
+    tk.Button(frame_entrada, text="Processar", command=graficos).grid(row=9, column=2, columnspan=1)
+    #
+
+    frame_saida = tk.Frame(simulador)
+    frame_saida.pack()
+    text_area_saida = tk.Text(frame_saida, width=50, height=10)
+    text_area_saida.pack()
+    simulador.mainloop()
 
 # Função para a caixa 1D
 def caixa_1d():
@@ -318,56 +424,142 @@ def caixa_1d():
     text_area_saida = tk.Text(frame_saida, width=50, height=10)
     text_area_saida.pack()
 
-def conversores():
-    def processar_3():
-        print("Processar")
-    limpar_frames()
-    frame_entrada = tk.Frame(janela)
+def caixa_1d_2():
+    global m, frame_entrada, frame_saida
+    def processar_2():
+        global a, k, xp, l, m, n
+        try:
+            a = float(entrada_a.get())
+            k = float(entrada_k.get())
+            xp = float(entrada_xp.get())
+
+            l = l_func()
+            n = n_func()
+            p = probalidade_2()
+            # prob = 2 / l * (sin(n * pi * xp) ** 2)
+            text_area_saida.delete(1.0, tk.END)
+            text_area_saida.insert(tk.END, f"Entradas:\n----------------\nMassa: {m} kg\n"
+                                           f"A: {a} m\nk: {k} m^-1\nPosição de x (que multiplique L): {xp}\n"
+                                           "----------------\nResultados:\n----------------\n"
+                                           f"Largura da caixa: {l:.4e} m\n"
+                                           f"Número quântico da partícula: {n}\n"
+                                           f"Probabilidade de encontrar a partícula na posição {xp}: {p:.3}\n")
+        except ValueError as e:
+            messagebox.showerror("Erro de Entrada", "Por favor, insira valores numéricos válidos.")
+    m = 1.67 * (10 ** -27)
+    caixa = tk.Tk()
+    caixa.title("Simulador")
+    frame_entrada = tk.Frame(caixa)
     frame_entrada.pack()
 
-    
-    frame_saida = tk.Frame(janela)
+    tk.Label(frame_entrada, text="Função de onda (no SI) de uma partícula \nconfinada em um poço de \npotencial infinito unidimencional é dada por:").grid(row=0, column=0)
+    tk.Label(frame_entrada, text=f"\nψ(x) = A sin (k * x) \n").grid(row=0, column=1)
+
+    m_opcao = tk.StringVar(value="1")
+    m_opcao.trace("w", lambda *args: m_option(m_opcao.get()))
+    tk.Radiobutton(frame_entrada, text="Próton", variable=m_opcao, value="1").grid(row=1, column=0, padx=10, pady=5)
+    tk.Radiobutton(frame_entrada, text="Elétron", variable=m_opcao, value="2").grid(row=1, column=1, padx=10, pady=5)
+    label_a = tk.Label(frame_entrada, text="A em m:")
+    label_a.grid(row=2, column=0)
+    entrada_a = tk.Entry(frame_entrada)
+    entrada_a.grid(row=2, column=1)
+    label_k = tk.Label(frame_entrada, text="k em m:")
+    label_k.grid(row=3, column=0)
+    entrada_k = tk.Entry(frame_entrada)
+    entrada_k.grid(row=3, column=1)
+    label_xp = tk.Label(frame_entrada, text="Posição de x (que multiplique L):")
+    label_xp.grid(row=4, column=0)
+    entrada_xp = tk.Entry(frame_entrada)
+    entrada_xp.grid(row=4, column=1)
+    botao_submit = tk.Button(frame_entrada, text="Processar", command=processar_2)
+    botao_submit.grid(row=5, column=0, columnspan=2)
+    frame_saida = tk.Frame(caixa)
     frame_saida.pack()
     text_area_saida = tk.Text(frame_saida, width=50, height=10)
     text_area_saida.pack()
+    caixa.mainloop()
+
+def conversor_1():
+    def converter_1():
+        print("Processar")
+    conversor = tk.Tk()
+    conversor.title("m / cm / nm / km / mm / um / pm")
+    def selected_option(entrada, saida):
+        print("Entrada:", entrada)
+        print("Saída:", saida)
+
+    option_entry = ["Opção 1", "Opção 2", "Opção 3"]
+    option_out = ["Opção 1", "Opção 2", "Opção 3"]
+
+    # StringVar to hold the selected option
+    selected_value = tk.StringVar()
+    selected_value.set(option_entry[0])  # Set initial selection
+    # StringVar to hold the selected option
+    selected_value1 = tk.StringVar()
+    selected_value1.set(option_out[0])  # Set initial selection
+
+    # Create the dropdown menu
+    dropdown = tk.OptionMenu(conversor, selected_value, *option_entry, command=selected_option)
+    dropdown = tk.OptionMenu(conversor, selected_value1, *option_out, command=selected_option)
+    # Add the dropdown menu to the window
+    dropdown.pack()
+    
+    conversor.mainloop()
+
+def conversor_2():
+    def converter_2():
+        print("Processar")
+    conversor = tk.Tk()
+    conversor.title("eV / J / cal / kcal / BTU / kWh / Wh")
+
+     
+    conversor.mainloop()
+
+def conversor_3():
+    def converter_3():
+        print("Processar")
+    conversor = tk.Tk()
+    conversor.title("Hz / kHz / MHz / GHz / THz")
+
+   
+    conversor.mainloop()
 # def create_animation_window():
 #     new_window = tk.Toplevel(janela)
 #     fig, ax = plt.subplots()
 #     x=np.linspace(0,1,1000)
 
 # Janela principal
-menu = tk.Menu(janela)
-# menu.add_command(label="Simulador", command=simulador)
-# menu.add_command(label="Caixa 1D", command=caixa_1d)
-# menu.add_command(label="Conversores", command=conversores)
+def main():
+    menu = tk.Menu(janela)
+    # menu.add_command(label="Simulador", command=simulador)
+    # menu.add_command(label="Caixa 1D", command=caixa_1d)
+    # menu.add_command(label="Conversores", command=conversores)
 
-submenu_simulador = tk.Menu(menu, tearoff=0)
-submenu_simulador.add_command(label="Normal", command=simulador)
-submenu_simulador.add_command(label="Pop-Up", command=lambda: print("Teste 1"))  # Função lambda simples
+    submenu_simulador = tk.Menu(menu, tearoff=0)
+    submenu_simulador.add_command(label="Normal", command=simulador)
+    submenu_simulador.add_command(label="Pop-Up", command=simulador_2)  # Função lambda simples
 
-menu.add_cascade(label="Simulador", menu=submenu_simulador)
+    menu.add_cascade(label="Simulador", menu=submenu_simulador)
 
-submenu_caixa = tk.Menu(menu, tearoff=0)
-submenu_caixa.add_command(label="Normal", command=caixa_1d)
-submenu_caixa.add_command(label="Pop-Up", command=lambda: print("Teste 1"))  # Função lambda simples
+    submenu_caixa = tk.Menu(menu, tearoff=0)
+    submenu_caixa.add_command(label="Normal", command=caixa_1d)
+    submenu_caixa.add_command(label="Pop-Up", command=caixa_1d_2)  # Função lambda simples
 
-menu.add_cascade(label="Caixa 1D", menu=submenu_caixa)
+    menu.add_cascade(label="Caixa 1D", menu=submenu_caixa)
 
-# # Janela secundária
-submenu_conversores = tk.Menu(menu, tearoff=0)
-submenu_conversores.add_command(label="m / cm / nm / km / mm / um / pm", command=lambda: print("Teste"))
-submenu_conversores.add_command(label="eV / J / cal / kcal / BTU / kWh / Wh", command=lambda: print("Teste 1"))  # Função lambda simples
-submenu_conversores.add_command(label="Hz / kHz / MHz / GHz / THz", command=lambda: print("Teste 2"))
+    # # Janela secundária
+    submenu_conversores = tk.Menu(menu, tearoff=0)
+    submenu_conversores.add_command(label="m / cm / nm / km / mm / um / pm", command=conversor_1)
+    submenu_conversores.add_command(label="eV / J / cal / kcal / BTU / kWh / Wh", command=conversor_2)  
+    submenu_conversores.add_command(label="Hz / kHz / MHz / GHz / THz", command=conversor_3)
 
-menu.add_cascade(label="Conversores", menu=submenu_conversores)
+    menu.add_cascade(label="Conversores", menu=submenu_conversores)
 
+    # janela.config(menu=menu)
+    # janela.mainloop()
+    menu.add_separator()  # Adiciona uma linha separadora
+    menu.add_command(label="Sair", command=janela.quit)
+    janela.config(menu=menu)
+    janela.mainloop()
 
-
-
-
-# janela.config(menu=menu)
-# janela.mainloop()
-menu.add_separator()  # Adiciona uma linha separadora
-menu.add_command(label="Sair", command=janela.quit)
-janela.config(menu=menu)
-janela.mainloop()
+main()
