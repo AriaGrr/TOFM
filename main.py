@@ -937,6 +937,84 @@ def conversor_3():
   text_area_saida.pack()
 
   conversor.mainloop()
+
+def rad_to_deg(rad):
+    return rad * 180 / pi
+
+def deg_to_rad(deg):
+    return deg * pi / 180
+
+def conversor_4():
+    global num, num_c, num_c2
+    def convert_4():
+        global num, num_c, num_c2
+
+        num_c = 0
+        num = 0
+
+        # Get the selected units from the dropdown menus
+        entrada = selected_1.get()
+
+        # Get the value entered in the entry widget
+        try:
+            num = float(entry.get())
+        except ValueError:
+            print("Valor inválido. Digite um número.")
+            return
+
+        # Implement conversion logic here based on 'entrada', 'saida', and 'valor_entrada'
+        # For example:
+        if entrada == 'rad':
+            num_c = rad_to_deg(num)
+            saida = 'deg'
+        elif entrada == 'deg':
+            num_c = deg_to_rad(num)
+            saida = 'rad'
+
+        # Display the converted value (if any)
+        if num_c:
+            text_area_saida.delete(1.0, tk.END)
+            text_area_saida.insert(tk.END, f"Entrada: {num} {entrada}\n"
+                                           f"Saida: {num_c} {saida}\n")
+
+    conversor = tk.Tk()
+    conversor.title("rad / deg")
+
+    def selected_option(entrada, saida):
+        # Update conversion logic based on selected units
+        pass
+
+    option_entry = ["rad", "deg"]
+
+    container = tk.Frame(conversor)
+    container.pack()
+
+    # StringVar to hold the selected option
+    selected_1 = tk.StringVar()
+    selected_1.set(option_entry[0])  # Set initial selection
+
+    description_1 = tk.Label(container, text="Unidade de Entrada")
+    description_1.pack(side=tk.LEFT)
+
+    # Create the dropdown menu
+    dropdown1 = tk.OptionMenu(container, selected_1, *option_entry, command=selected_option)
+    dropdown1.pack(side=tk.LEFT)
+
+    # Add an entry widget for user input
+    entry = tk.Entry(container)
+    entry.pack(side=tk.LEFT)
+
+    # Add a button to trigger conversion
+    convert_button = tk.Button(container, text="Converter", command=convert_4)
+    convert_button.pack(side=tk.LEFT)
+
+    frame_saida = tk.Frame(conversor)
+    frame_saida.pack()
+    text_area_saida = tk.Text(frame_saida, width=50, height=2)
+    text_area_saida.pack()
+
+    conversor.mainloop()
+
 # def create_animation_window():
 #     new_window = tk.Toplevel(janela)
 #     fig, ax = plt.subplots()
@@ -966,6 +1044,7 @@ def main():
     submenu_conversores.add_command(label="m / cm / nm / km / mm / um / pm", command=conversor_1)
     submenu_conversores.add_command(label="eV / J / cal / kcal / BTU / kWh / Wh", command=conversor_2)  
     submenu_conversores.add_command(label="Hz / kHz / MHz / GHz / THz", command=conversor_3)
+    submenu_conversores.add_command(label="rad / deg", command=conversor_4)
 
     menu.add_cascade(label="Conversores", menu=submenu_conversores)
 
