@@ -631,52 +631,312 @@ def caixa_1d_2():
     caixa.mainloop()
 
 def conversor_1():
-    def converter_1():
-        print("Processar")
-    conversor = tk.Tk()
-    conversor.title("m / cm / nm / km / mm / um / pm")
-    def selected_option(entrada, saida):
-        print("Entrada:", entrada)
-        print("Saída:", saida)
+  global num, num_c, num_c2
+  def convert_value():
+    global num, num_c, num_c2
+    # Get the selected units from the dropdown menus
+    entrada = selected_1.get()
+    saida = selected_2.get()
 
-    option_entry = ["Opção 1", "Opção 2", "Opção 3"]
-    option_out = ["Opção 1", "Opção 2", "Opção 3"]
+    # Get the value entered in the entry widget
+    try:
+      num = float(entry.get())
+    except ValueError:
+      print("Valor inválido. Digite um número.")
+      return
 
-    # StringVar to hold the selected option
-    selected_value = tk.StringVar()
-    selected_value.set(option_entry[0])  # Set initial selection
-    # StringVar to hold the selected option
-    selected_value1 = tk.StringVar()
-    selected_value1.set(option_out[0])  # Set initial selection
-    container = tk.Frame(janela)
-    container.place(x=50, y=100)  # Position the container at (50, 100)
+    # Implement conversion logic here based on 'entrada', 'saida', and 'valor_entrada'
+    # For example:
+    if entrada == 'm':
+        num_c = num
+    elif entrada == 'cm':
+        num_c = cm_metros(num)
+    elif entrada == 'nm':
+        num_c = nm_metros(num)
+    elif entrada == 'km':
+        num_c = km_metros(num)
+    elif entrada == 'mm':
+        num_c = mm_metros(num)
+    elif entrada == 'um':
+        num_c = um_metros(num)
+    elif entrada == 'pm':
+        num_c = pm_metros(num)
 
-    dropdown.pack() 
-    # Create the dropdown menu
-    dropdown = tk.OptionMenu(conversor, selected_value, *option_entry, command=selected_option)
-    dropdown = tk.OptionMenu(conversor, selected_value1, *option_out, command=selected_option)
-    # Add the dropdown menu to the window
-    dropdown.pack()
-    
-    conversor.mainloop()
+    if saida == 'm':
+        num_c2 = num_c
+    elif saida == 'cm':
+        num_c2 = metros_cm(num_c)
+    elif saida == 'nm':
+        num_c2 = metros_nm(num_c)
+    elif saida == 'km':
+        num_c2 = metros_km(num_c)
+    elif saida == 'mm':
+        num_c2 = metros_mm(num_c)
+    elif saida == 'um':
+        num_c2 = metros_um(num_c)
+    elif saida == 'pm':
+        num_c2 = metros_pm(num_c)
+    # Display the converted value (if any)
+    if num_c2:
+        text_area_saida.delete(1.0, tk.END)
+        text_area_saida.insert(tk.END, f"Entrada: {num} {entrada}\n"
+                                       f"Saida: {num_c2} {saida}\n")
+
+  conversor = tk.Tk()
+  conversor.title("m / cm / nm / km / mm / um / pm")
+
+  def selected_option(entrada, saida):
+    # Update conversion logic based on selected units
+    pass
+
+  option_entry = ["m", "cm", "nm", "km", "mm", "um", "pm"]
+  option_out = ["m", "cm", "nm", "km", "mm", "um", "pm"]
+
+  container = tk.Frame(conversor)
+  container.pack()
+
+  # StringVar to hold the selected option
+  selected_1 = tk.StringVar()
+  selected_1.set(option_entry[0])  # Set initial selection
+
+  # StringVar to hold the selected option
+  selected_2 = tk.StringVar()
+  selected_2.set(option_out[0])  # Set initial selection
+
+  description_1 = tk.Label(container, text="Unidade de Entrada")
+  description_1.pack(side=tk.LEFT)
+
+  # Create the dropdown menu
+  dropdown1 = tk.OptionMenu(container, selected_1, *option_entry, command=selected_option)
+  dropdown1.pack(side=tk.LEFT)
+
+  description_2 = tk.Label(container, text="Unidade de Saída")
+  description_2.pack(side=tk.LEFT)
+
+  dropdown2 = tk.OptionMenu(container, selected_2, *option_out, command=selected_option)
+  dropdown2.pack(side=tk.LEFT)
+
+  # Add an entry widget for user input
+  entry = tk.Entry(container)
+  entry.pack(side=tk.LEFT)
+
+  # Add a button to trigger conversion
+  convert_button = tk.Button(container, text="Converter", command=convert_value)
+  convert_button.pack(side=tk.LEFT)
+
+  frame_saida = tk.Frame(conversor)
+  frame_saida.pack()
+  text_area_saida = tk.Text(frame_saida, width=50, height=2)
+  text_area_saida.pack()
+
+  conversor.mainloop()
 
 def conversor_2():
-    def converter_2():
-        print("Processar")
-    conversor = tk.Tk()
-    conversor.title("eV / J / cal / kcal / BTU / kWh / Wh")
+  global num, num_c, num_c2
+  def convert_2():
+    global num, num_c, num_c2
+    # Get the selected units from the dropdown menus
+    entrada = selected_1.get()
+    saida = selected_2.get()
 
-     
-    conversor.mainloop()
+    # Get the value entered in the entry widget
+    try:
+      num = float(entry.get())
+    except ValueError:
+      print("Valor inválido. Digite um número.")
+      return
+
+    # Implement conversion logic here based on 'entrada', 'saida', and 'valor_entrada'
+    # For example:
+    if entrada == 'eV':
+        num_c = num
+    elif entrada == 'J':
+        num_c = J_eV(num)
+    elif entrada == 'cal':
+        num_c = cal_eV(num)
+    elif entrada == 'kcal':
+        num_c = kcal_eV(num)
+    elif entrada == 'BTU':
+        num_c = Btu_eV(num)
+    elif entrada == 'kWh':
+        num_c = kWh_eV(num)
+    elif entrada == 'Wh':
+        num_c = Wh_eV(num)
+
+    if saida == 'eV':
+        num_c2 = num_c
+    elif saida == 'J':
+        num_c2 = eV_J(num_c)
+    elif saida == 'cal':
+        num_c2 = eV_cal(num_c)
+    elif saida == 'kcal':
+        num_c2 = eV_kcal(num_c)
+    elif saida == 'BTU':
+        num_c2 = eV_Btu(num_c)
+    elif saida == 'kWh':
+        num_c2 = eV_kWh(num_c)
+    elif saida == 'Wh':
+        num_c2 = eV_Wh(num_c)
+    # Display the converted value (if any)
+    if num_c2:
+        text_area_saida.delete(1.0, tk.END)
+        text_area_saida.insert(tk.END, f"Entrada: {num} {entrada}\n"
+                                       f"Saida: {num_c2} {saida}\n")
+
+  conversor = tk.Tk()
+  conversor.title("eV / J / cal / kcal / BTU / kWh / Wh")
+
+  def selected_option(entrada, saida):
+    # Update conversion logic based on selected units
+    pass
+
+  option_entry = ["eV", "J", "cal", "kcal", "BTU", "kWh", "Wh"]
+  option_out = ["eV", "J", "cal", "kcal", "BTU", "kWh", "Wh"]
+
+  container = tk.Frame(conversor)
+  container.pack()
+
+  # StringVar to hold the selected option
+  selected_1 = tk.StringVar()
+  selected_1.set(option_entry[0])  # Set initial selection
+
+  # StringVar to hold the selected option
+  selected_2 = tk.StringVar()
+  selected_2.set(option_out[0])  # Set initial selection
+
+  description_1 = tk.Label(container, text="Unidade de Entrada")
+  description_1.pack(side=tk.LEFT)
+
+  # Create the dropdown menu
+  dropdown1 = tk.OptionMenu(container, selected_1, *option_entry, command=selected_option)
+  dropdown1.pack(side=tk.LEFT)
+
+  description_2 = tk.Label(container, text="Unidade de Saída")
+  description_2.pack(side=tk.LEFT)
+
+  dropdown2 = tk.OptionMenu(container, selected_2, *option_out, command=selected_option)
+  dropdown2.pack(side=tk.LEFT)
+
+  # Add an entry widget for user input
+  entry = tk.Entry(container)
+  entry.pack(side=tk.LEFT)
+
+  # Add a button to trigger conversion
+  convert_button = tk.Button(container, text="Converter", command=convert_2)
+  convert_button.pack(side=tk.LEFT)
+
+  frame_saida = tk.Frame(conversor)
+  frame_saida.pack()
+  text_area_saida = tk.Text(frame_saida, width=50, height=2)
+  text_area_saida.pack()
+
+  conversor.mainloop()
 
 def conversor_3():
-    def converter_3():
-        print("Processar")
-    conversor = tk.Tk()
-    conversor.title("Hz / kHz / MHz / GHz / THz")
+  global num, num_c, num_c2
+  def convert_3():
+    global num, num_c, num_c2
+    # Get the selected units from the dropdown menus
+    entrada = selected_1.get()
+    saida = selected_2.get()
 
-   
-    conversor.mainloop()
+    # Get the value entered in the entry widget
+    try:
+      num = float(entry.get())
+    except ValueError:
+      print("Valor inválido. Digite um número.")
+      return
+
+    # Implement conversion logic here based on 'entrada', 'saida', and 'valor_entrada'
+    # For example:
+    if entrada == 'Hz':
+        num_c = num
+    elif entrada == 'kHz':
+        num_c = kHz_Hz(num)
+    elif entrada == 'MHz':
+        num_c = MHz_Hz(num)
+    elif entrada == 'GHz':
+        num_c = GHz_Hz(num)
+    elif entrada == 'THz':
+        num_c = THz_Hz(num)
+    # elif entrada == '':
+    #     num_c = 
+    # elif entrada == '':
+    #     num_c = 
+    # elif entrada == '':
+    #     num_c = 
+
+    if saida == 'Hz':
+        num_c2 = num_c
+    elif saida == 'kHz':
+        num_c2 = Hz_kHz(num_c)
+    elif saida == 'MHz':
+        num_c2 = Hz_MHz(num_c)
+    elif saida == 'GHz':
+        num_c2 = Hz_GHz(num_c)
+    elif saida == 'THz':
+        num_c2 = Hz_THz(num_c)
+    # elif saida == '':
+    #     num_c2 = 
+    # elif saida == '':
+    #     num_c2 = 
+    # elif saida == '':
+    #     num_c2 = 
+
+    # Display the converted value (if any)
+    if num_c2:
+        text_area_saida.delete(1.0, tk.END)
+        text_area_saida.insert(tk.END, f"Entrada: {num} {entrada}\n"
+                                       f"Saida: {num_c2} {saida}\n")
+
+  conversor = tk.Tk()
+  conversor.title("Hz / kHz / MHz / GHz / THzh")
+
+  def selected_option(entrada, saida):
+    # Update conversion logic based on selected units
+    pass
+
+  option_entry = ["Hz", "kHz", "MHz", "GHz", "THz"]
+  option_out = ["Hz", "kHz", "MHz", "GHz", "THz"]
+
+  container = tk.Frame(conversor)
+  container.pack()
+
+  # StringVar to hold the selected option
+  selected_1 = tk.StringVar()
+  selected_1.set(option_entry[0])  # Set initial selection
+
+  # StringVar to hold the selected option
+  selected_2 = tk.StringVar()
+  selected_2.set(option_out[0])  # Set initial selection
+
+  description_1 = tk.Label(container, text="Unidade de Entrada")
+  description_1.pack(side=tk.LEFT)
+
+  # Create the dropdown menu
+  dropdown1 = tk.OptionMenu(container, selected_1, *option_entry, command=selected_option)
+  dropdown1.pack(side=tk.LEFT)
+
+  description_2 = tk.Label(container, text="Unidade de Saída")
+  description_2.pack(side=tk.LEFT)
+
+  dropdown2 = tk.OptionMenu(container, selected_2, *option_out, command=selected_option)
+  dropdown2.pack(side=tk.LEFT)
+
+  # Add an entry widget for user input
+  entry = tk.Entry(container)
+  entry.pack(side=tk.LEFT)
+
+  # Add a button to trigger conversion
+  convert_button = tk.Button(container, text="Converter", command=convert_3)
+  convert_button.pack(side=tk.LEFT)
+
+  frame_saida = tk.Frame(conversor)
+  frame_saida.pack()
+  text_area_saida = tk.Text(frame_saida, width=50, height=2)
+  text_area_saida.pack()
+
+  conversor.mainloop()
 # def create_animation_window():
 #     new_window = tk.Toplevel(janela)
 #     fig, ax = plt.subplots()
