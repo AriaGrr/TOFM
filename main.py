@@ -327,13 +327,19 @@ class Simulator:
         self.frame_entrada = tk.Frame(self.simulador)
         self.frame_entrada.pack()
 
-        tk.Label(self.frame_entrada, text="Introdução\n").grid(row=0, column=1)
+        tk.Label(self.frame_entrada, text="Introdução").grid(row=0, column=0, columnspan=2)
         self.m_opcao = tk.StringVar(self.frame_entrada, "1")
         self.m_opcao.trace("w", lambda *args: self.definir_massa(self.m_opcao.get()))
-        tk.Radiobutton(self.frame_entrada, text="Próton", variable=self.m_opcao, value="1").grid(row=2, column=0)
-        tk.Radiobutton(self.frame_entrada, text="Elétron", variable=self.m_opcao, value="2").grid(row=2, column=1)
+
+        tk.Radiobutton(self.frame_entrada, text="Próton", variable=self.m_opcao, value="1").grid(row=1, column=0)
+        tk.Radiobutton(self.frame_entrada, text="Elétron", variable=self.m_opcao, value="2").grid(row=1, column=1)
+
         self.labels_and_entries(self.frame_entrada)
-        tk.Button(self.frame_entrada, text="Processar", command=self.processar).grid(row=9, column=0, columnspan=2)
+
+        tk.Button(self.frame_entrada, text="Processar", command=self.processar).grid(row=9, column=0)
+        tk.Button(self.frame_entrada, text="Simulação de Saltos Quânticos", command=lambda: show_quantum_jumps(int(entrada_ni.get()), int(entrada_nf.get()))).grid(row=10, column=0)
+        tk.Button(self.frame_entrada, text="Gerar Gráficos", command=lambda: plot_wave_and_probability_functions(float(entrada_l.get()), int(entrada_ni.get()), int(entrada_nf.get()))).grid(row=11, column=0)
+
         self.frame_saida = tk.Frame(self.simulador)
         self.frame_saida.pack()
         self.text_area_saida = tk.Text(self.frame_saida, width=50, height=10)
@@ -368,9 +374,9 @@ class Simulator:
 
     def definir_massa(self, opcao):
         if opcao == "1":
-            self.massa = 1.67e-27  # massa do próton
+            self.massa = 1.67e-27
         elif opcao == "2":
-            self.massa = 9.11e-31  # massa do elétron
+            self.massa = 9.11e-31
         else:
             messagebox.showerror("Erro", "Opção inválida. Tente novamente.")
 
@@ -394,7 +400,6 @@ class Simulator:
 
     def run(self):
         self.simulador.mainloop()
-
 #Nova função da caixa quantica
 class QuantumBoxSimulator:
     def __init__(self):
@@ -581,34 +586,56 @@ class UnitConverterApp:
 
 ########################################Funções de Animação e Plotagem########################################
 
-def animate_wave_function(massa, l, ni, nf):
-    fig, ax = plt.subplots()
-    x = np.linspace(0, l, 300)
-    lines = []
-    for n in range(ni, nf + 1):
-        line, = ax.plot(x, np.sin(n * np.pi * x / l), label=f'n={n}')
-        lines.append(line)
-    ax.set_xlim(0, l)
-    ax.set_ylim(-1.2, 1.2)
-    ax.legend()
+def plot_wave_and_probability_functions(l, ni, nf):
+    x = np.linspace(0, l, 400)
+    
+    # Funções de onda
+    psi_ni = np.sqrt(2/l) * np.sin(ni * np.pi * x / l)
+    psi_nf = np.sqrt(2/l) * np.sin(nf * np.pi * x / l)
+    
+    # Distribuições de probabilidade
+    probability_ni = psi_ni**2
+    probability_nf = psi_nf**2
 
-    def update(frame):
-        for i, line in enumerate(lines):
-            n = ni + i
-            line.set_ydata(np.sin(n * np.pi * (x + frame / 20) / l))
-        return lines
+    fig, axes = plt.subplots(2, 2, figsize=(12, 8))
+    
+    # Plotando as funções de onda
+    axes[0, 0].plot(x, psi_ni, label=f'ψ(x) para Ni = {ni}')
+    axes[0, 0].set_title(f'Função de Onda para Ni = {ni}')
+    axes[0, 0].set_xlabel('x (m)')
+    axes[0, 0].set_ylabel('ψ(x)')
+    axes[0, 0].legend()
 
-    ani = FuncAnimation(fig, update, frames=100, interval=50, blit=True)
+    axes[0, 1].plot(x, psi_nf, label=f'ψ(x) para Nf = {nf}')
+    axes[0, 1].set_title(f'Função de Onda para Nf = {nf}')
+    axes[0, 1].set_xlabel('x (m)')
+    axes[0, 1].set_ylabel('ψ(x)')
+    axes[0, 1].legend()
+
+    # Plotando as distribuições de probabilidade
+    axes[1, 0].plot(x, probability_ni, label=f'P(x) para Ni = {ni}')
+    axes[1, 0].set_title(f'Distribuição de Probabilidade para Ni = {ni}')
+    axes[1, 0].set_xlabel('x (m)')
+    axes[1, 0].set_ylabel('P(x)')
+    axes[1, 0].legend()
+
+    axes[1, 1].plot(x, probability_nf, label=f'P(x) para Nf = {nf}')
+    axes[1, 1].set_title(f'Distribuição de Probabilidade para Nf = {nf}')
+    axes[1, 1].set_xlabel('x (m)')
+    axes[1, 1].set_ylabel('P(x)')
+    axes[1, 1].legend()
+
+    plt.tight_layout()
     plt.show()
 
-def show_quantum_jumps():
+def show_quantum_jumps(ni, nf):
     fig, ax = plt.subplots()
     energy_levels = np.array([0.0, 0.1, 0.2, 0.3, 0.4])
     ax.set_ylim(-0.05, 0.45)
     ax.set_xlim(0, 5)
     ax.set_ylabel('Energia (eV)')
-    ax.set_xlabel('Tempo (s)')
-    ax.set_title('Simulação de Saltos Quânticos com Emissão de Fótons')
+    ax.set_xlabel('x (nm)')  # Mudança do texto do eixo x aqui
+    ax.set_title('Simulação de Saltos Quânticos')
     for level in energy_levels:
         ax.hlines(level, 0, 5, colors='blue', linestyles='--')
 
@@ -622,24 +649,36 @@ def show_quantum_jumps():
         return particle, photon,
 
     def update(frame):
-        current_level = energy_levels[frame % len(energy_levels)]
-        particle.set_data(2.5, current_level)
-        if frame > 0:
-            previous_level = energy_levels[(frame - 1) % len(energy_levels)]
-            photon.set_data([2.5, 2.5], [previous_level, current_level])
+        # Calculando o índice do nível atual baseado no frame
+        if nf > ni:
+            current_level = int(frame / 10) + ni - 1
+            if current_level > nf - 1:
+                current_level = nf - 1
+        else:
+            current_level = ni - 1 - int(frame / 10)
+            if current_level < nf - 1:
+                current_level = nf - 1
+
+        particle.set_data(2.5, energy_levels[current_level])
+
+        # Gerencia a exibição do fóton com base na direção do movimento
+        if nf > ni and frame % 10 == 0 and frame != 0:
+            previous_level = current_level - 1 if current_level != ni - 1 else current_level
+            photon.set_data([2.5, 2.5], [energy_levels[previous_level], energy_levels[current_level]])
+        elif nf < ni:
+            photon.set_data([], [])
         else:
             photon.set_data([], [])
+
         return particle, photon,
 
-    ani = FuncAnimation(fig, update, frames=np.arange(0, 10), init_func=init, blit=True, interval=1000, repeat=True)
+    ani = FuncAnimation(fig, update, frames=np.arange(0, abs(nf - ni) * 10 + 1), init_func=init, blit=True, interval=100, repeat=False)
 
     window = tk.Toplevel()
     window.title("Animação de Saltos Quânticos")
     canvas = FigureCanvasTkAgg(fig, master=window)
     canvas.draw()
     canvas.get_tk_widget().pack()
-
-
 ########################################Função Main########################################
 
 
@@ -659,9 +698,6 @@ def main():
     submenu_conversores = tk.Menu(menu, tearoff=0)
     submenu_conversores.add_command(label="Conversores", command=UnitConverterApp)
     menu.add_cascade(label="Conversores", menu=submenu_conversores)
-
-    menu.add_command(label="Realizar Simulação de Onda", command=lambda: animate_wave_function(massa=9.11e-31, l=1e-9, ni=1, nf=3))
-    menu.add_command(label="Simulação de Saltos Quânticos", command=show_quantum_jumps)
 
     menu.add_separator()
     menu.add_command(label="Sair", command=janela.quit)
