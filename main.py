@@ -387,7 +387,7 @@ def simulador():
     frame_entrada = tk.Frame(simulador)
     frame_entrada.pack()
 
-    tk.Label(frame_entrada, text="Introdução\n").grid(row=0, column=1)
+    tk.Label(frame_entrada, text="Para simular a quantização de energia de uma partícula confinada em uma caixa unidimensional, demonstrando o princípio quântico de confinamento, os usuários devem definir parâmetros como a largura da caixa e os estados quânticos inicial e final. A simulação então calcula e exibe as energias, funções de onda e probabilidades, além de gerar gráficos que ilustram esses conceitos, facilitando o entendimento visual dos processos quânticos estudados.\n").grid(row=0, column=1)
 
     m_opcao = tk.StringVar(frame_entrada, "1")
     m_opcao.trace("w", lambda *args: m_option(m_opcao.get()))
