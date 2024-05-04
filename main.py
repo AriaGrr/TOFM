@@ -1,7 +1,7 @@
 # Turma 725, Equipe 3:
 # Marjorie Luize Martins Costa, RA: 24223084-5;
 # Matheus Ferreira de Freitas, RA: 24123080-4;
-# Henrique Hodel Babler, RA: 24123079-6
+# Henrique Hodel Babler, RA: 24123079-6;
 
 import os
 import tkinter as tk
@@ -55,262 +55,208 @@ num_c2 = 0 # Número convertido 2
 # Funções para conversões
 # Todos os conversores vão para uma unidade padrão e depois convertem para a unidade desejada
 
-# Conversor de eV -> J
-def eV_J(num):
-    #num_c = num * 1.60217662 * (10 ** -19)
-    # num_c = num * 1.602 * (10 ** -19)
+def eV_J(num): # Conversor de eV -> J
     num_c = num * 1.6022e-19
     return num_c
 
-# Conversor de J -> eV
-def J_eV(num):
-    #num_c = num / 1.60217662 * (10 ** -19)
-    # num_c = num / 1.602 * (10 ** -19)
+def J_eV(num): # Conversor de J -> eV
     num_c = num * 6.242e+18
     return num_c
 
-# Conversor de eV -> cal
-def eV_cal(num):
+def eV_cal(num): # Conversor de eV -> cal
     num_c = num * 2.3900573613767 * (10 ** 20)
     return num_c
 
-# Conversor de cal -> eV
-def cal_eV(num):
+def cal_eV(num): # Conversor de cal -> eV
     num_c = num / 2.3900573613767 * (10 ** 20)
     return num_c
 
-# Conversor de eV -> kcal
-def eV_kcal(num):
+def eV_kcal(num): # Conversor de eV -> kcal
     num_c = num * 2.3900573613767 * (10 ** 17)
     return num_c
 
-# Conversor de kcal -> eV
-def kcal_eV(num):
+def kcal_eV(num): # Conversor de kcal -> eV
     num_c = num / 2.3900573613767 * (10 ** 17)
     return num_c
 
-# Conversor de eV -> BTU
-def eV_Btu(num):
+def eV_Btu(num): # Conversor de eV -> BTU
     num_c = num * 3.826733324 * (10 ** 19)
     return num_c
 
-# Conversor de BTU -> eV
-def Btu_eV(num):
+def Btu_eV(num): # Conversor de BTU -> eV
     num_c = num / 3.826733324 * (10 ** 19)
     return num_c
 
-# Conversor de eV -> kWh
-def eV_kWh(num):
+def eV_kWh(num): # Conversor de eV -> kWh
     num_c = num * 2.7777777777778 * (10 ** -7)
     return num_c
 
-# Conversor de kWh -> eV
-def kWh_eV(num):
+def kWh_eV(num): # Conversor de kWh -> eV
     num_c = num / 2.7777777777778 * (10 ** -7)
     return num_c
 
-# Conversor de eV -> Wh
-def eV_Wh(num):
+def eV_Wh(num): # Conversor de eV -> Wh
     num_c = num * 3.6 * (10 ** -6)
     return num_c
 
-# Conversor de eV -> Wh
-def Wh_eV(num):
+def Wh_eV(num): # Conversor de Wh -> eV
     num_c = num / 3.6 * (10 ** -6)
     return num_c
 
-# Conversor de metros -> nm
-def metros_nm(num):
+def metros_nm(num): # Conversor de metros -> nm
     num_c = num * 1e9
     return num_c
 
-# Conversor de nm -> metros
-def nm_metros(num):
+def nm_metros(num): # Conversor de nm -> metros
     num_c = num / 1e9
     return num_c
 
-# Conversor de metros -> cm
-def metros_cm(num):
+def metros_cm(num): # Conversor de metros -> cm
     num_c = num * 100
     return num_c
 
-# Conversor de cm -> metros
-def cm_metros(num):
+def cm_metros(num): # Conversor de cm -> metros
     num_c = num / 100
     return num_c
 
-# Conversor de metros -> km
-def metros_km(num):
+def metros_km(num): # Conversor de metros -> km
     num_c = num / 1000
     return num_c
 
-# Conversor de km -> metros
-def km_metros(num):
+def km_metros(num): # Conversor de km -> metros
     num_c = num * 1000
     return num_c
 
-# Conversor de metros -> mm
-def metros_mm(num):
+def metros_mm(num): # Conversor de metros -> mm
     num_c = num * 1000
     return num_c
 
-# Conversor de mm -> metros
-def mm_metros(num):
+def mm_metros(num): # Conversor de mm -> metros
     num_c = num / 1000
     return num_c
 
-# Conversor de metros -> um
-def metros_um(num):
+def metros_um(num): # Conversor de metros -> um
     num_c = num * 1e6
     return num_c
 
-# Conversor de um -> metros
-def um_metros(num):
+def um_metros(num): # Conversor de um -> metros
     num_c = num / 1e6
     return num_c
 
-# Conversor de metros -> pm
-def metros_pm(num):
+def metros_pm(num): # Conversor de metros -> pm
     num_c = num * 1e12
     return num_c
 
-# Conversor de pm -> metros
-def pm_metros(num):
+def pm_metros(num): # Conversor de pm -> metros
     num_c = num / 1e12
     return num_c
 
-# Conversor de Hz -> kHz
-def Hz_kHz(num):
+def Hz_kHz(num): # Conversor de Hz -> kHz
     num_c = num / 1e3
     return num_c
 
-# Conversor de kHz -> Hz
-def kHz_Hz(num):
+def kHz_Hz(num): # Conversor de kHz -> Hz
     num_c = num * 1e3
     return num_c
 
-# Conversor de Hz -> MHz
-def Hz_MHz(num):
+def Hz_MHz(num): # Conversor de Hz -> MHz
     num_c = num / 1e6
     return num_c
 
-# Conversor de MHz -> Hz
-def MHz_Hz(num):
+def MHz_Hz(num): # Conversor de MHz -> Hz
     num_c = num * 1e6
     return num_c
 
-# Conversor de Hz -> GHz
-def Hz_GHz(num):
+def Hz_GHz(num): # Conversor de Hz -> GHz
     num_c = num / 1e9
     return num_c
 
-# Conversor de GHz -> Hz
-def GHz_Hz(num):
+def GHz_Hz(num): # Conversor de GHz -> Hz
     num_c = num * 1e9
     return num_c
 
-# Conversor de Hz -> THz
-def Hz_THz(num):
+def Hz_THz(num): # Conversor de Hz -> THz
     num_c = num / 1e12
     return num_c
 
-# Conversor de THz -> Hz
-def THz_Hz(num):
+def THz_Hz(num): # Conversor de THz -> Hz
     num_c = num * 1e12
     return num_c
 
-# Rad -> Deg
-def rad_to_deg(rad):
+def rad_to_deg(rad): # Conversor de radianos para graus
     return rad * 180 / pi
 
-# Deg -> Rad
-def deg_to_rad(deg):
+def deg_to_rad(deg): # Conversor de graus para radianos
     return deg * pi / 180
 
 # Funções de cálculos
 
-# Função para calcular a energia inicial
-def ei_j():
+def ei_j(): # Função para calcular a energia inicial em J
     ei = ni ** 2 * (hj ** 2) / (8 * m * l ** 2)
     return ei
 
-# Função para calcular a energia final
-def ef_j():
+def ef_j(): # Função para calcular a energia final em J
     ef = nf ** 2 * (hj ** 2) / (8 * m * l ** 2)
     return ef
 
-# Função para calcular a energia final em eV
-def e_f():
+def e_f(): # Função para calcular energia do fóton
     efoton = abs(ef_ev() - ei_ev())
     return efoton
 
-# Função para calcular a energia inicial em eV
-def ei_ev():
+def ei_ev(): # Função para calcular a energia inicial em eV
     eij = ei_j() / (1.602 * (10 ** -19))
     return eij
 
-# Função para calcular a energia final em eV
-def ef_ev():
+def ef_ev(): # Função para calcular a energia final em eV
     efj = ef_j() / (1.602 * (10 ** -19))
     return efj
 
-# Função para calcular o comprimento de onda
-def lamb():
+def lamb(): # Função para calcular o comprimento de onda
     lamb = (hev * 3 * (10 ** 8)) / e_f()
     return lamb
 
-# Função para calcular a frequência
-def freq():
+def freq(): # Função para calcular a frequência
     f = e_f() / hev
     return f
 
-# Função para calcular a velocidade inicial
-def calcular_vi():
+def calcular_vi(): # Função para calcular a velocidade inicial
     vi = sqrt((2 * ei_j()) / m)
     return vi
 
-# Função para calcular a velocidade final
-def calcular_vf():
+def calcular_vf(): # Função para calcular a velocidade final
     vf = sqrt((2 * ef_j()) / m)
     return vf
 
-# Função para calcular o comprimento de onda inicial
-def calcular_ci():
+def calcular_ci(): # Função para calcular o comprimento de onda inicial
     ci = 2 * l / ni
     return ci
 
-# Função para calcular o comprimento de onda final
-def calcular_cf():
+def calcular_cf(): # Função para calcular o comprimento de onda final
     cf = 2 * l / nf
     return cf
 
-# Função para calcular o número de onda inicial
-def calcular_ki():
+def calcular_ki(): # Função para calcular o número de onda inicial
     ki = ni * pi / l
     return ki
 
-# Função para calcular o número de onda final
-def calcular_kf():
+def calcular_kf(): # Função para calcular o número de onda final
     kf = nf * pi / l
     return kf
 
-# Função para calcular a amplitude
-def l_func():
+def l_func(): # Função para calcular a largura da caixa
     l = 2 / a ** 2
     return l
 
-# Função para calcular o número de onda
-def n_func():
+def n_func(): # Função para calcular o número de onda
     n = round((k * l) / pi)
     return n
 
-# Verificar 
-def probabilidade(a, b, ni, l):
+def probabilidade(a, b, ni, l): # Função para calcular a probabilidade
     integrand = lambda x: 2 / l * sin((ni * pi * x) / l) ** 2
     result, _ = quad(integrand, a, b)
     return result
 
-def probalidade_2():
+def probalidade_2(): # Função para calcular a probabilidade
     prob = 2 / l * (sin(n * pi * xp) ** 2)
     return prob
 
@@ -897,14 +843,12 @@ def conversor_4():
                                            f"{num_c} {saida}\n")
             text_area_historico.insert(tk.END, f"----------------\n"
                                                 f"Entrada: {num} {entrada}\n"
-                                                f"Saida: {num_c} {saida}\n"
-                                                f"----------------\n")
+                                                f"Saida: {num_c} {saida}\n")
 
     conversor = tk.Tk()
     conversor.title("rad / deg")
 
     def selected_option(entrada, saida):
-
         pass
 
     option_entry = ["rad", "deg"]
@@ -1055,7 +999,6 @@ def conversor_geral():
     conversor.title("Conversores")
 
     def selected_option(entrada, saida):
-
         pass
 
     option_entry = ["rad", "deg", "m", "cm", "nm", "km", "mm", "um", "pm", "eV", "J", "cal", "kcal", "BTU", "kWh", "Wh", "Hz", "kHz", "MHz", "GHz", "THz"]
@@ -1104,9 +1047,7 @@ def conversor_geral():
 
     conversor.mainloop()
 
-################################################## NÃO MEXA ##################################################
-                                            #Funções de Simulação
-################################################## NÃO MEXA ##################################################
+# Funções de simulação
 
 def plot_wave_and_probability_functions(l, ni, nf):
     x = np.linspace(0, l, 400)
@@ -1195,10 +1136,7 @@ def show_quantum_jumps(ni, nf, l):
     canvas.draw()
     canvas.get_tk_widget().pack()
 
-####################################################################################################
-                                            #Função Main
-####################################################################################################
-
+# Função principal
 def main():
     menu = tk.Menu(janela)
  
