@@ -463,7 +463,7 @@ def caixa_1d():
     frame_text = tk.Frame(caixa)
     frame_text.pack()
 
-    label_text = tk.Label(frame_text, text="Função de onda (no SI) de uma partícula confinada em \num poço de potencial infinito unidimencional é dada por:\n" f"ψ(x) = A sin (k * x)\n\nDados de entrada:", wraplength=460, justify="center")
+    label_text = tk.Label(frame_text, text="Função de onda (no SI) de uma partícula confinada em \num poço de potencial infinito unidimencional é dada por:\n\n" f"ψ(x) = A sin (k * x)\n\nDados de entrada:", wraplength=460, justify="center")
     label_text.pack()
 
     frame_entrada = tk.Frame(caixa)
