@@ -384,10 +384,14 @@ def simulador():
     simulador = tk.Tk()
     simulador.title("Simulador")
 
+    frame_text = tk.Frame(simulador)
+    frame_text.pack()
+
+    label_text = tk.Label(frame_text, text="Para simular a quantização de energia de uma partícula confinada em uma caixa unidimensional, demonstrando o princípio quântico de confinamento, os usuários devem definir parâmetros como a largura da caixa e os estados quânticos inicial e final. A simulação então calcula e exibe as energias, funções de onda e probabilidades, além de gerar gráficos que ilustram esses conceitos,\n facilitando o entendimento visual dos processos quânticos estudados.\n\nDados de entrada:", wraplength=460, justify="center")
+    label_text.pack()
+
     frame_entrada = tk.Frame(simulador)
     frame_entrada.pack()
-
-    tk.Label(frame_entrada, text="Para simular a quantização de energia de uma partícula confinada em uma caixa unidimensional, demonstrando o princípio quântico de confinamento, os usuários devem definir parâmetros como a largura da caixa e os estados quânticos inicial e final. A simulação então calcula e exibe as energias, funções de onda e probabilidades, além de gerar gráficos que ilustram esses conceitos, facilitando o entendimento visual dos processos quânticos estudados.\n").grid(row=0, column=1)
 
     m_opcao = tk.StringVar(frame_entrada, "1")
     m_opcao.trace("w", lambda *args: m_option(m_opcao.get()))
@@ -454,12 +458,16 @@ def caixa_1d():
             messagebox.showerror("Erro de Entrada", "Por favor, insira valores numéricos válidos.")
     m = 1.67 * (10 ** -27)
     caixa = tk.Tk()
-    caixa.title("Simulador")
+    caixa.title("Caixa 1D")
+
+    frame_text = tk.Frame(caixa)
+    frame_text.pack()
+
+    label_text = tk.Label(frame_text, text="Função de onda (no SI) de uma partícula confinada em \num poço de potencial infinito unidimencional é dada por:\n" f"ψ(x) = A sin (k * x)\n\nDados de entrada:", wraplength=460, justify="center")
+    label_text.pack()
+
     frame_entrada = tk.Frame(caixa)
     frame_entrada.pack()
-
-    tk.Label(frame_entrada, text="Função de onda (no SI) de uma partícula \nconfinada em um poço de \npotencial infinito unidimencional é dada por:").grid(row=0, column=0)
-    tk.Label(frame_entrada, text=f"\nψ(x) = A sin (k * x) \n").grid(row=0, column=1)
 
     m_opcao = tk.StringVar(value="1")
     m_opcao.trace("w", lambda *args: m_option(m_opcao.get()))
