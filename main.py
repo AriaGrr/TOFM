@@ -331,9 +331,6 @@ def m_option(opcao):
     else:
         print("Opção inválida. Tente novamente.")
 
-
-# Esta função foi criada para consolidar e simplificar a criação de labels e entradas(mta label slc)
-
 def labels_and_entries(parent):
     global entrada_l, entrada_ni, entrada_nf, entrada_a, entrada_b
     entrada_l = tk.Entry(parent)
@@ -609,7 +606,6 @@ def conversor_1():
   conversor.title("m / cm / nm / km / mm / um / pm")
 
   def selected_option(entrada, saida):
-    # Update conversion logic based on selected units
     pass
 
   option_entry = ["m", "cm", "nm", "km", "mm", "um", "pm"]
@@ -618,11 +614,9 @@ def conversor_1():
   container = tk.Frame(conversor)
   container.pack()
 
-  # StringVar to hold the selected option
   selected_1 = tk.StringVar()
   selected_1.set(option_entry[0])
 
-  # StringVar to hold the selected option
   selected_2 = tk.StringVar()
   selected_2.set(option_out[0])
 
@@ -704,7 +698,7 @@ def conversor_2():
         num_c2 = eV_kWh(num_c)
     elif saida == 'Wh':
         num_c2 = eV_Wh(num_c)
-    # Display the converted value (if any)
+
     if num_c2:
         text_area_saida.delete(1.0, tk.END)
         text_area_saida.insert(tk.END,f"{num_c2} {saida}\n")
@@ -716,7 +710,6 @@ def conversor_2():
   conversor.title("eV / J / cal / kcal / BTU / kWh / Wh")
 
   def selected_option(entrada, saida):
-    # Update conversion logic based on selected units
     pass
 
   option_entry = ["eV", "J", "cal", "kcal", "BTU", "kWh", "Wh"]
@@ -826,7 +819,6 @@ def conversor_3():
   conversor.title("Hz / kHz / MHz / GHz / THzh")
 
   def selected_option(entrada, saida):
-    # Update conversion logic based on selected units
     pass
 
   option_entry = ["Hz", "kHz", "MHz", "GHz", "THz"]
@@ -912,7 +904,7 @@ def conversor_4():
     conversor.title("rad / deg")
 
     def selected_option(entrada, saida):
-        # Update conversion logic based on selected units
+
         pass
 
     option_entry = ["rad", "deg"]
@@ -1063,7 +1055,7 @@ def conversor_geral():
     conversor.title("Conversores")
 
     def selected_option(entrada, saida):
-        # Update conversion logic based on selected units
+
         pass
 
     option_entry = ["rad", "deg", "m", "cm", "nm", "km", "mm", "um", "pm", "eV", "J", "cal", "kcal", "BTU", "kWh", "Wh", "Hz", "kHz", "MHz", "GHz", "THz"]
