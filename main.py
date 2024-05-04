@@ -891,17 +891,14 @@ def conversor_4():
 def plot_wave_and_probability_functions(l, ni, nf):
     x = np.linspace(0, l, 400)
     
-    # Funções de onda
     psi_ni = np.sqrt(2/l) * np.sin(ni * np.pi * x / l)
     psi_nf = np.sqrt(2/l) * np.sin(nf * np.pi * x / l)
     
-    # Distribuições de probabilidade
     probability_ni = psi_ni**2
     probability_nf = psi_nf**2
 
     fig, axes = plt.subplots(2, 2, figsize=(12, 8))
     
-    # Plotando as funções de onda
     axes[0, 0].plot(x, psi_ni, label=f'ψ(x) para Ni = {ni}')
     axes[0, 0].set_title(f'Função de Onda para Ni = {ni}')
     axes[0, 0].set_xlabel('x (m)')
@@ -914,7 +911,6 @@ def plot_wave_and_probability_functions(l, ni, nf):
     axes[0, 1].set_ylabel('ψ(x)')
     axes[0, 1].legend()
 
-    # Plotando as distribuições de probabilidade
     axes[1, 0].plot(x, probability_ni, label=f'P(x) para Ni = {ni}')
     axes[1, 0].set_title(f'Distribuição de Probabilidade para Ni = {ni}')
     axes[1, 0].set_xlabel('x (m)')
@@ -935,15 +931,15 @@ def plot_wave_and_probability_functions(l, ni, nf):
 
 def show_quantum_jumps(ni, nf, l):
     fig, ax = plt.subplots()
-    # Define os níveis de energia do átomo de hidrogênio (em eV)
+    
     energy_levels = np.array([-13.6, -3.4, -1.51, -0.85, -0.54])
-    ax.set_ylim(-14, 0)  # Ajustado para mostrar claramente todos os níveis de energia
+    ax.set_ylim(-14, 0) 
     ax.set_xlim(0, l)
     ax.set_ylabel('Energia (eV)')
     ax.set_xlabel('x (nm)')
     ax.set_title('Simulação de Saltos Quânticos com Emissão e Absorção de Fótons')
 
-    # Desenhar linhas horizontais para cada nível de energia
+  
     for level in energy_levels:
         ax.hlines(level, 0, l, colors='blue', linestyles='--')
 
@@ -951,8 +947,8 @@ def show_quantum_jumps(ni, nf, l):
     photon, = ax.plot([], [], 'y-', linewidth=2, label='Fóton Emitido/Absorvido')
     ax.legend(loc='upper right')
 
-    # Define as variáveis para controle dos níveis
-    current_level = ni - 1  # Ajusta para indexação base 0
+   
+    current_level = ni - 1 
 
     def init():
         particle.set_data([], [])
@@ -962,13 +958,13 @@ def show_quantum_jumps(ni, nf, l):
     def update(frame):
         nonlocal current_level
         previous_level = current_level
-        if frame == 1:  # Realiza a transição imediata se necessário
+        if frame == 1: 
             current_level = nf - 1
-        elif frame > 10:  # Após 10 frames, começa o movimento aleatório
+        elif frame > 5: 
             current_level = random.choice(range(len(energy_levels)))
 
         particle.set_data(l/2, energy_levels[current_level])
-        if current_level != previous_level:  # Atualiza o fóton se houver mudança de nível
+        if current_level != previous_level: 
             photon.set_data([l/2, l/2], [energy_levels[previous_level], energy_levels[current_level]])
         else:
             photon.set_data([], [])
@@ -996,30 +992,21 @@ def show_quantum_jumps(ni, nf, l):
 
 
 
-# Janela principal
 def main():
     menu = tk.Menu(janela)
     # menu.add_command(label="Simulador", command=simulador)
     # menu.add_command(label="Caixa 1D", command=caixa_1d)
     # menu.add_command(label="Conversores", command=conversores)
+    
+    menu.add_command(label="Simulador", command=simulador)
+    menu.add_command(label="Caixa 1D", command=caixa_1d)
 
-    submenu_simulador = tk.Menu(menu, tearoff=0)
-    submenu_simulador.add_command(label="Normal", command=simulador)
-
-    menu.add_cascade(label="Simulador", menu=submenu_simulador)
-
-    submenu_caixa = tk.Menu(menu, tearoff=0)
-    submenu_caixa.add_command(label="Normal", command=caixa_1d)
-
-    menu.add_cascade(label="Caixa 1D", menu=submenu_caixa)
-
-    # # Janela secundária
+      # # Janela secundária
     submenu_conversores = tk.Menu(menu, tearoff=0)
     submenu_conversores.add_command(label="m / cm / nm / km / mm / um / pm", command=conversor_1)
     submenu_conversores.add_command(label="eV / J / cal / kcal / BTU / kWh / Wh", command=conversor_2)  
     submenu_conversores.add_command(label="Hz / kHz / MHz / GHz / THz", command=conversor_3)
     submenu_conversores.add_command(label="rad / deg", command=conversor_4)
-
     menu.add_cascade(label="Conversores", menu=submenu_conversores)
 
     # janela.config(menu=menu)
