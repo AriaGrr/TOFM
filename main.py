@@ -219,6 +219,14 @@ def THz_Hz(num):
     num_c = num * 1e12
     return num_c
 
+# Rad -> Deg
+def rad_to_deg(rad):
+    return rad * 180 / pi
+
+# Deg -> Rad
+def deg_to_rad(deg):
+    return deg * pi / 180
+
 # Funções de cálculos
 
 # Função para calcular a energia inicial
@@ -382,12 +390,8 @@ def simulador():
             f = probabilidade(a, b, nf, l)
 
             text_area_saida.delete(1.0, tk.END)
-            text_area_saida.insert(tk.END, f"Resultados:\n----------------\nMassa: {m} kg\n"
-                                           f"Largura da caixa (L): {l} m\n"
-                                           f"n inicial da partícula (Ni): {ni}\n"
-                                           f"n final da partícula (Nf): {nf}\n"
-                                           f"a: {a}\n"
-                                           f"b: {b}\n"f"ψ{ni} (x) = {area:.4e} . sen({(ki):.4e}.x)\n"
+            text_area_saida.insert(tk.END,
+                                  f"Resultados:\n----------------\n"
                                   f"ψ{nf} (x) = {area:.4e} . sen({(kf):.4e}.x)\n"
                                   f"E{ni} = {eij:.4e} J ou {eiev:.4e} eV\n"
                                   f"E{nf} = {efj:.4e} J ou {efev:.4e} eV\n"
@@ -398,7 +402,30 @@ def simulador():
                                   f"Comprimento de onda de De Broglie:\nn = {ni}: ƛ = {ci:.4e} m\tn = {nf}: ƛ = {cf:.4e} m\n"
                                   f"A probabilidade da partícula estar entre {a:.4e} e {b:.4e} no nível {ni} é de {i*100:.3f} %\n"
                                   f"A probabilidade da partícula estar entre {a:.4e} e {b:.4e} no nível {nf} é de {f*100:.3f} %\n")
-            # plot_wave_functions(a, b, ni, nf, l)
+            
+            if m == 1.67 * (10 ** -27):
+                tipo = "próton"
+            elif m == 9.11 * (10 ** -31):
+                tipo = "elétron"
+            text_area_historico.insert(tk.END,f"----------------\nEntradas:\n----------------\n"
+                                           f"Massa do {tipo}: {m} kg\n"
+                                           f"Largura da caixa (L): {l} m\n"
+                                           f"n inicial da partícula (Ni): {ni}\n"
+                                           f"n final da partícula (Nf): {nf}\n"
+                                           f"a: {a}\n"
+                                           f"b: {b}\n"f"ψ{ni} (x) = {area:.4e} . sen({(ki):.4e}.x)\n"
+                                           f"----------------\nResultados:\n----------------\n"
+                                  f"ψ{nf} (x) = {area:.4e} . sen({(kf):.4e}.x)\n"
+                                  f"E{ni} = {eij:.4e} J ou {eiev:.4e} eV\n"
+                                  f"E{nf} = {efj:.4e} J ou {efev:.4e} eV\n"
+                                  f"Efoton = {E:.4e} eV\n"
+                                  f"Comprimento de onda do fóton = {lam:.4e} m\n"
+                                  f"Frequência do fóton = {f:.4e} Hz\n"
+                                  f"Velocidade da partícula:\nn = {ni}: v = {vi:.4e} m/s\tn = {nf}: v = {vf:.4e} m/s\n"
+                                  f"Comprimento de onda de De Broglie:\nn = {ni}: ƛ = {ci:.4e} m\tn = {nf}: ƛ = {cf:.4e} m\n"
+                                  f"A probabilidade da partícula estar entre {a:.4e} e {b:.4e} no nível {ni} é de {i*100:.3f} %\n"
+                                  f"A probabilidade da partícula estar entre {a:.4e} e {b:.4e} no nível {nf} é de {f*100:.3f} %\n")
+                        # plot_wave_functions(a, b, ni, nf, l)
             # plot_probability_distribution(a, b, ni, nf, l)
         except ValueError:
             messagebox.showerror("Erro de Entrada", "Por favor, insira valores numéricos válidos.")
@@ -425,19 +452,26 @@ def simulador():
     tk.Radiobutton(frame_entrada, text="Elétron", variable=m_opcao, value="2").grid(row=2, column=1, padx=10, pady=5)
     labels_and_entries(frame_entrada)
 
-    # Arrumar os botões
-    # Colocar os gráficos
+    tk.Button(frame_entrada, text="Processar", command=processar_1).grid(row=9, column=1)
 
-    tk.Button(frame_entrada, text="Processar", command=processar_1).grid(row=9, column=0, columnspan=1)
+    tk.Button(frame_entrada, text="Gerar Gráficos", command=lambda: plot_wave_and_probability_functions(float(entrada_l.get()), int(entrada_ni.get()), int(entrada_nf.get()))).grid(row=9, column=0)
 
-    tk.Button(frame_entrada, text="Simulação de Saltos Quânticos", command=lambda: show_quantum_jumps(int(entrada_ni.get()), int(entrada_nf.get()), float(entrada_l.get()))).grid(row=10, column=0)
-    tk.Button(frame_entrada, text="Gerar Gráficos", command=lambda: plot_wave_and_probability_functions(float(entrada_l.get()), int(entrada_ni.get()), int(entrada_nf.get()))).grid(row=11, column=0)
-    #
+    tk.Button(frame_entrada, text="Simulação de Saltos Quânticos", command=lambda: show_quantum_jumps(int(entrada_ni.get()), int(entrada_nf.get()), float(entrada_l.get()))).grid(row=9, column=2)
 
     frame_saida = tk.Frame(simulador)
     frame_saida.pack()
-    text_area_saida = tk.Text(frame_saida, width=50, height=10)
+    label_saida = tk.Label(frame_saida, text="Saída:")
+    label_saida.pack()
+    text_area_saida = tk.Text(frame_saida, width=60, height=20)
     text_area_saida.pack()
+
+    frame_historico = tk.Frame(simulador)
+    frame_historico.pack()
+    label_historico = tk.Label(frame_historico, text="Historico:")
+    label_historico.pack()
+    text_area_historico = tk.Text(frame_historico, width=60, height=20)
+    text_area_historico.pack()
+
     simulador.mainloop()
 
 # Função para a caixa 1D
@@ -456,12 +490,23 @@ def caixa_1d():
             p = probalidade_2()
             # prob = 2 / l * (sin(n * pi * xp) ** 2)
             text_area_saida.delete(1.0, tk.END)
-            text_area_saida.insert(tk.END, f"Entradas:\n----------------\nMassa: {m} kg\n"
-                                           f"A: {a} m\nk: {k} m^-1\nPosição de x (que multiplique L): {xp}\n"
-                                           "----------------\nResultados:\n----------------\n"
+            text_area_saida.insert(tk.END,"----------------\nResultados:\n----------------\n"
                                            f"Largura da caixa: {l:.4e} m\n"
                                            f"Número quântico da partícula: {n}\n"
                                            f"Probabilidade de encontrar a partícula na posição {xp}: {p:.3}\n")
+            if m == 1.67 * (10 ** -27):
+                tipo = "próton"
+            elif m == 9.11 * (10 ** -31):
+                tipo = "elétron"
+            text_area_historico.insert(tk.END,f"----------------\nEntradas:\n----------------\n"
+                                        f"Massa do {tipo}: {m} kg\n"
+                                        f"A: {a}\n"
+                                        f"K: {k}\n"
+                                        f"Posição de x: {xp}\n"
+                                        f"----------------\nResultados:\n----------------\n"
+                                        f"Largura da caixa: {l:.4e} m\n"
+                                        f"Número quântico da partícula: {n}\n"
+                                        f"Probabilidade de encontrar a partícula na posição {xp}: {p:.3}\n")
         except ValueError as e:
             messagebox.showerror("Erro de Entrada", "Por favor, insira valores numéricos válidos.")
     m = 1.67 * (10 ** -27)
@@ -493,27 +538,37 @@ def caixa_1d():
     botao_submit.grid(row=5, column=0, columnspan=2)
     frame_saida = tk.Frame(caixa)
     frame_saida.pack()
-    text_area_saida = tk.Text(frame_saida, width=50, height=10)
+    label_saida = tk.Label(frame_saida, text="Saída:")
+    label_saida.pack()
+    text_area_saida = tk.Text(frame_saida, width=60, height=10)
     text_area_saida.pack()
+
+    frame_historico = tk.Frame(caixa)
+    frame_historico.pack()
+    label_historico = tk.Label(frame_historico, text="Historico:")
+    label_historico.pack()
+    text_area_historico = tk.Text(frame_historico, width=60, height=10)
+    text_area_historico.pack()
+
     caixa.mainloop()
 
+# Conversores
+
+# Conversor de unidades de comprimento
 def conversor_1():
   global num, num_c, num_c2
   def convert_value():
     global num, num_c, num_c2
-    # Get the selected units from the dropdown menus
+    
     entrada = selected_1.get()
     saida = selected_2.get()
 
-    # Get the value entered in the entry widget
     try:
       num = float(entry.get())
     except ValueError:
       print("Valor inválido. Digite um número.")
       return
 
-    # Implement conversion logic here based on 'entrada', 'saida', and 'valor_entrada'
-    # For example:
     if entrada == 'm':
         num_c = num
     elif entrada == 'cm':
@@ -543,11 +598,12 @@ def conversor_1():
         num_c2 = metros_um(num_c)
     elif saida == 'pm':
         num_c2 = metros_pm(num_c)
-    # Display the converted value (if any)
-    if num_c2:
-        text_area_saida.delete(1.0, tk.END)
-        text_area_saida.insert(tk.END, f"Entrada: {num} {entrada}\n"
-                                       f"Saida: {num_c2} {saida}\n")
+
+    text_area_saida.delete(1.0, tk.END)
+    text_area_saida.insert(tk.END, f"{num_c2} {saida}\n")
+    text_area_historico.insert(tk.END, f"----------------\n"
+                                   f"Entrada: {num} {entrada}\n"
+                                      f"Saida: {num_c2} {saida}\n")
 
   conversor = tk.Tk()
   conversor.title("m / cm / nm / km / mm / um / pm")
@@ -564,57 +620,61 @@ def conversor_1():
 
   # StringVar to hold the selected option
   selected_1 = tk.StringVar()
-  selected_1.set(option_entry[0])  # Set initial selection
+  selected_1.set(option_entry[0])
 
   # StringVar to hold the selected option
   selected_2 = tk.StringVar()
-  selected_2.set(option_out[0])  # Set initial selection
+  selected_2.set(option_out[0])
 
-  description_1 = tk.Label(container, text="Unidade de Entrada")
+  description_1 = tk.Label(container, text="Entrada")
   description_1.pack(side=tk.LEFT)
 
-  # Create the dropdown menu
   dropdown1 = tk.OptionMenu(container, selected_1, *option_entry, command=selected_option)
   dropdown1.pack(side=tk.LEFT)
 
-  description_2 = tk.Label(container, text="Unidade de Saída")
+  description_2 = tk.Label(container, text="Saída")
   description_2.pack(side=tk.LEFT)
 
   dropdown2 = tk.OptionMenu(container, selected_2, *option_out, command=selected_option)
   dropdown2.pack(side=tk.LEFT)
 
-  # Add an entry widget for user input
   entry = tk.Entry(container)
   entry.pack(side=tk.LEFT)
 
-  # Add a button to trigger conversion
   convert_button = tk.Button(container, text="Converter", command=convert_value)
   convert_button.pack(side=tk.LEFT)
 
   frame_saida = tk.Frame(conversor)
   frame_saida.pack()
-  text_area_saida = tk.Text(frame_saida, width=50, height=2)
+  label_saida = tk.Label(frame_saida, text="Saída:")
+  label_saida.pack()
+  text_area_saida = tk.Text(frame_saida, width=40, height=1)
   text_area_saida.pack()
+
+  frame_historico = tk.Frame(conversor)
+  frame_historico.pack()
+  label_historico = tk.Label(frame_historico, text="Historico:")
+  label_historico.pack()
+  text_area_historico = tk.Text(frame_historico, width=40, height=4)
+  text_area_historico.pack()
 
   conversor.mainloop()
 
+# Conversor de unidades de energia
 def conversor_2():
   global num, num_c, num_c2
   def convert_2():
     global num, num_c, num_c2
-    # Get the selected units from the dropdown menus
+    
     entrada = selected_1.get()
     saida = selected_2.get()
 
-    # Get the value entered in the entry widget
     try:
       num = float(entry.get())
     except ValueError:
       print("Valor inválido. Digite um número.")
       return
 
-    # Implement conversion logic here based on 'entrada', 'saida', and 'valor_entrada'
-    # For example:
     if entrada == 'eV':
         num_c = num
     elif entrada == 'J':
@@ -647,8 +707,10 @@ def conversor_2():
     # Display the converted value (if any)
     if num_c2:
         text_area_saida.delete(1.0, tk.END)
-        text_area_saida.insert(tk.END, f"Entrada: {num} {entrada}\n"
-                                       f"Saida: {num_c2} {saida}\n")
+        text_area_saida.insert(tk.END,f"{num_c2} {saida}\n")
+        text_area_historico.insert(tk.END, f"----------------\n"
+                                   f"Entrada: {num} {entrada}\n"
+                                      f"Saida: {num_c2} {saida}\n")
 
   conversor = tk.Tk()
   conversor.title("eV / J / cal / kcal / BTU / kWh / Wh")
@@ -663,59 +725,61 @@ def conversor_2():
   container = tk.Frame(conversor)
   container.pack()
 
-  # StringVar to hold the selected option
   selected_1 = tk.StringVar()
-  selected_1.set(option_entry[0])  # Set initial selection
+  selected_1.set(option_entry[0])
 
-  # StringVar to hold the selected option
   selected_2 = tk.StringVar()
-  selected_2.set(option_out[0])  # Set initial selection
+  selected_2.set(option_out[0])
 
-  description_1 = tk.Label(container, text="Unidade de Entrada")
+  description_1 = tk.Label(container, text="Entrada")
   description_1.pack(side=tk.LEFT)
 
-  # Create the dropdown menu
   dropdown1 = tk.OptionMenu(container, selected_1, *option_entry, command=selected_option)
   dropdown1.pack(side=tk.LEFT)
 
-  description_2 = tk.Label(container, text="Unidade de Saída")
+  description_2 = tk.Label(container, text="Saída")
   description_2.pack(side=tk.LEFT)
 
   dropdown2 = tk.OptionMenu(container, selected_2, *option_out, command=selected_option)
   dropdown2.pack(side=tk.LEFT)
 
-  # Add an entry widget for user input
   entry = tk.Entry(container)
   entry.pack(side=tk.LEFT)
 
-  # Add a button to trigger conversion
   convert_button = tk.Button(container, text="Converter", command=convert_2)
   convert_button.pack(side=tk.LEFT)
 
   frame_saida = tk.Frame(conversor)
   frame_saida.pack()
-  text_area_saida = tk.Text(frame_saida, width=50, height=2)
+  label_saida = tk.Label(frame_saida, text="Saída:")
+  label_saida.pack()
+  text_area_saida = tk.Text(frame_saida, width=40, height=1)
   text_area_saida.pack()
+
+  frame_historico = tk.Frame(conversor)
+  frame_historico.pack()
+  label_historico = tk.Label(frame_historico, text="Historico:")
+  label_historico.pack()
+  text_area_historico = tk.Text(frame_historico, width=40, height=4)
+  text_area_historico.pack()
 
   conversor.mainloop()
 
+# Conversor de unidades de frequência
 def conversor_3():
   global num, num_c, num_c2
   def convert_3():
     global num, num_c, num_c2
-    # Get the selected units from the dropdown menus
+    
     entrada = selected_1.get()
     saida = selected_2.get()
 
-    # Get the value entered in the entry widget
     try:
       num = float(entry.get())
     except ValueError:
       print("Valor inválido. Digite um número.")
       return
 
-    # Implement conversion logic here based on 'entrada', 'saida', and 'valor_entrada'
-    # For example:
     if entrada == 'Hz':
         num_c = num
     elif entrada == 'kHz':
@@ -753,8 +817,10 @@ def conversor_3():
     # Display the converted value (if any)
     if num_c2:
         text_area_saida.delete(1.0, tk.END)
-        text_area_saida.insert(tk.END, f"Entrada: {num} {entrada}\n"
-                                       f"Saida: {num_c2} {saida}\n")
+        text_area_saida.insert(tk.END, f"{num_c2} {saida}\n")
+        text_area_historico.insert(tk.END, f"----------------\n"
+                                   f"Entrada: {num} {entrada}\n"
+                                      f"Saida: {num_c2} {saida}\n")
 
   conversor = tk.Tk()
   conversor.title("Hz / kHz / MHz / GHz / THzh")
@@ -769,48 +835,47 @@ def conversor_3():
   container = tk.Frame(conversor)
   container.pack()
 
-  # StringVar to hold the selected option
   selected_1 = tk.StringVar()
-  selected_1.set(option_entry[0])  # Set initial selection
+  selected_1.set(option_entry[0])
 
-  # StringVar to hold the selected option
   selected_2 = tk.StringVar()
-  selected_2.set(option_out[0])  # Set initial selection
+  selected_2.set(option_out[0])
 
-  description_1 = tk.Label(container, text="Unidade de Entrada")
+  description_1 = tk.Label(container, text="Entrada")
   description_1.pack(side=tk.LEFT)
 
-  # Create the dropdown menu
   dropdown1 = tk.OptionMenu(container, selected_1, *option_entry, command=selected_option)
   dropdown1.pack(side=tk.LEFT)
 
-  description_2 = tk.Label(container, text="Unidade de Saída")
+  description_2 = tk.Label(container, text="Saída")
   description_2.pack(side=tk.LEFT)
 
   dropdown2 = tk.OptionMenu(container, selected_2, *option_out, command=selected_option)
   dropdown2.pack(side=tk.LEFT)
 
-  # Add an entry widget for user input
   entry = tk.Entry(container)
   entry.pack(side=tk.LEFT)
 
-  # Add a button to trigger conversion
   convert_button = tk.Button(container, text="Converter", command=convert_3)
   convert_button.pack(side=tk.LEFT)
 
   frame_saida = tk.Frame(conversor)
   frame_saida.pack()
-  text_area_saida = tk.Text(frame_saida, width=50, height=2)
+  label_saida = tk.Label(frame_saida, text="Saída:")
+  label_saida.pack()
+  text_area_saida = tk.Text(frame_saida, width=40, height=1)
   text_area_saida.pack()
+
+  frame_historico = tk.Frame(conversor)
+  frame_historico.pack()
+  label_historico = tk.Label(frame_historico, text="Historico:")
+  label_historico.pack()
+  text_area_historico = tk.Text(frame_historico, width=40, height=4)
+  text_area_historico.pack()
 
   conversor.mainloop()
 
-def rad_to_deg(rad):
-    return rad * 180 / pi
-
-def deg_to_rad(deg):
-    return deg * pi / 180
-
+# Conversor de unidades de ângulo
 def conversor_4():
     global num, num_c, num_c2
     def convert_4():
@@ -819,18 +884,14 @@ def conversor_4():
         num_c = 0
         num = 0
 
-        # Get the selected units from the dropdown menus
         entrada = selected_1.get()
 
-        # Get the value entered in the entry widget
         try:
             num = float(entry.get())
         except ValueError:
             print("Valor inválido. Digite um número.")
             return
 
-        # Implement conversion logic here based on 'entrada', 'saida', and 'valor_entrada'
-        # For example:
         if entrada == 'rad':
             num_c = rad_to_deg(num)
             saida = 'deg'
@@ -838,11 +899,14 @@ def conversor_4():
             num_c = deg_to_rad(num)
             saida = 'rad'
 
-        # Display the converted value (if any)
         if num_c:
             text_area_saida.delete(1.0, tk.END)
-            text_area_saida.insert(tk.END, f"Entrada: {num} {entrada}\n"
-                                           f"Saida: {num_c} {saida}\n")
+            text_area_saida.insert(tk.END, 
+                                           f"{num_c} {saida}\n")
+            text_area_historico.insert(tk.END, f"----------------\n"
+                                                f"Entrada: {num} {entrada}\n"
+                                                f"Saida: {num_c} {saida}\n"
+                                                f"----------------\n")
 
     conversor = tk.Tk()
     conversor.title("rad / deg")
@@ -856,37 +920,201 @@ def conversor_4():
     container = tk.Frame(conversor)
     container.pack()
 
-    # StringVar to hold the selected option
     selected_1 = tk.StringVar()
-    selected_1.set(option_entry[0])  # Set initial selection
+    selected_1.set(option_entry[0])
 
-    description_1 = tk.Label(container, text="Unidade de Entrada")
+    description_1 = tk.Label(container, text="Entrada")
     description_1.pack(side=tk.LEFT)
 
-    # Create the dropdown menu
     dropdown1 = tk.OptionMenu(container, selected_1, *option_entry, command=selected_option)
     dropdown1.pack(side=tk.LEFT)
 
-    # Add an entry widget for user input
     entry = tk.Entry(container)
     entry.pack(side=tk.LEFT)
 
-    # Add a button to trigger conversion
     convert_button = tk.Button(container, text="Converter", command=convert_4)
     convert_button.pack(side=tk.LEFT)
 
     frame_saida = tk.Frame(conversor)
     frame_saida.pack()
-    text_area_saida = tk.Text(frame_saida, width=50, height=2)
+    label_saida = tk.Label(frame_saida, text="Saída:")
+    label_saida.pack()
+    text_area_saida = tk.Text(frame_saida, width=40, height=1)
     text_area_saida.pack()
+
+    frame_historico = tk.Frame(conversor)
+    frame_historico.pack()
+    label_historico = tk.Label(frame_historico, text="Historico:")
+    label_historico.pack()
+    text_area_historico = tk.Text(frame_historico, width=40, height=4)
+    text_area_historico.pack()
+
+    conversor.mainloop()
+
+def conversor_geral():
+    global num, num_c, num_c2
+    def convertendo():
+        print("Convertendo")
+        global num, num_c, num_c2
+        
+        entrada = selected_1.get()
+        saida = selected_2.get()
+
+        try:
+            num = float(entry.get())
+        except ValueError:
+            print("Valor inválido. Digite um número.")
+            return
+        
+        if entrada == 'rad':
+            num_c = rad_to_deg(num)
+            saida = 'deg'
+        elif entrada == 'deg':
+            num_c = deg_to_rad(num)
+            saida = 'rad'
+        elif entrada == 'm':
+            num_c = num
+        elif entrada == 'cm':
+            num_c = cm_metros(num)
+        elif entrada == 'nm':
+            num_c = nm_metros(num)
+        elif entrada == 'km':
+            num_c = km_metros(num)
+        elif entrada == 'mm':
+            num_c = mm_metros(num)
+        elif entrada == 'um':
+            num_c = um_metros(num)
+        elif entrada == 'pm':
+            num_c = pm_metros(num)
+        elif entrada == 'eV':
+            num_c = num
+        elif entrada == 'J':
+            num_c = J_eV(num)
+        elif entrada == 'cal':
+            num_c = cal_eV(num)
+        elif entrada == 'kcal':
+            num_c = kcal_eV(num)
+        elif entrada == 'BTU':
+            num_c = Btu_eV(num)
+        elif entrada == 'kWh':
+            num_c = kWh_eV(num)
+        elif entrada == 'Wh':
+            num_c = Wh_eV(num)
+        elif entrada == 'Hz':
+            num_c = num
+        elif entrada == 'kHz':
+            num_c = kHz_Hz(num)
+        elif entrada == 'MHz':
+            num_c = MHz_Hz(num)
+        elif entrada == 'GHz':
+            num_c = GHz_Hz(num)
+        elif entrada == 'THz':
+            num_c = THz_Hz(num)
+
+        if saida == entrada:
+            num_c2 = num_c
+
+        if (entrada == 'm' or entrada == 'cm' or entrada == 'nm' or entrada == 'km' or entrada == 'mm' or entrada == 'um' or entrada == 'pm') and saida == 'cm':
+            num_c2 = metros_cm(num_c)
+        elif (entrada == 'm' or entrada == 'cm' or entrada == 'nm' or entrada == 'km' or entrada == 'mm' or entrada == 'um' or entrada == 'pm') and saida == 'nm':
+            num_c2 = metros_nm(num_c)
+        elif (entrada == 'm' or entrada == 'cm' or entrada == 'nm' or entrada == 'km' or entrada == 'mm' or entrada == 'um' or entrada == 'pm') and saida == 'km':
+            num_c2 = metros_km(num_c)
+        elif (entrada == 'm' or entrada == 'cm' or entrada == 'nm' or entrada == 'km' or entrada == 'mm' or entrada == 'um' or entrada == 'pm') and saida == 'mm':
+            num_c2 = metros_mm(num_c)
+        elif (entrada == 'm' or entrada == 'cm' or entrada == 'nm' or entrada == 'km' or entrada == 'mm' or entrada == 'um' or entrada == 'pm') and saida == 'um':
+            num_c2 = metros_um(num_c)
+        elif (entrada == 'm' or entrada == 'cm' or entrada == 'nm' or entrada == 'km' or entrada == 'mm' or entrada == 'um' or entrada == 'pm') and saida == 'pm':
+            num_c2 = metros_pm(num_c)
+        elif (entrada == 'eV' or entrada == 'J' or entrada == 'cal' or entrada == 'kcal' or entrada == 'BTU' or entrada == 'kWh' or entrada == 'Wh') and saida == 'J':
+            num_c2 = eV_J(num_c)
+        elif (entrada == 'eV' or entrada == 'J' or entrada == 'cal' or entrada == 'kcal' or entrada == 'BTU' or entrada == 'kWh' or entrada == 'Wh') and saida == 'cal':
+            num_c2 = eV_cal(num_c)
+        elif (entrada == 'eV' or entrada == 'J' or entrada == 'cal' or entrada == 'kcal' or entrada == 'BTU' or entrada == 'kWh' or entrada == 'Wh') and saida == 'kcal':
+            num_c2 = eV_kcal(num_c)
+        elif (entrada == 'eV' or entrada == 'J' or entrada == 'cal' or entrada == 'kcal' or entrada == 'BTU' or entrada == 'kWh' or entrada == 'Wh') and saida == 'BTU':
+            num_c2 = eV_Btu(num_c)
+        elif (entrada == 'eV' or entrada == 'J' or entrada == 'cal' or entrada == 'kcal' or entrada == 'BTU' or entrada == 'kWh' or entrada == 'Wh') and saida == 'kWh':
+            num_c2 = eV_kWh(num_c)
+        elif (entrada == 'eV' or entrada == 'J' or entrada == 'cal' or entrada == 'kcal' or entrada == 'BTU' or entrada == 'kWh' or entrada == 'Wh') and saida == 'Wh':
+            num_c2 = eV_Wh(num_c)
+        elif (entrada == 'Hz' or entrada == 'kHz' or entrada == 'MHz' or entrada == 'GHz' or entrada == 'THz') and saida == 'kHz':
+            num_c2 = Hz_kHz(num_c)
+        elif (entrada == 'Hz' or entrada == 'kHz' or entrada == 'MHz' or entrada == 'GHz' or entrada == 'THz') and saida == 'MHz':
+            num_c2 = Hz_MHz(num_c)
+        elif (entrada == 'Hz' or entrada == 'kHz' or entrada == 'MHz' or entrada == 'GHz' or entrada == 'THz') and saida == 'GHz':
+            num_c2 = Hz_GHz(num_c)
+        elif (entrada == 'Hz' or entrada == 'kHz' or entrada == 'MHz' or entrada == 'GHz' or entrada == 'THz') and saida == 'THz':
+            num_c2 = Hz_THz(num_c)
+        elif entrada == 'rad' or entrada == 'deg':
+            num_c2 = num_c
+        else:
+            num_c2 = num_c
+            print("Erro de conversão")
+        
+        text_area_saida.delete(1.0, tk.END)
+        text_area_saida.insert(tk.END, f"Entrada: {num} {entrada}\n"
+                                        f"Saida: {num_c2} {saida}\n")
+        text_area_historico.insert(tk.END, f"----------------\n"
+                                        f"Entrada: {num} {entrada}\n"
+                                        f"Saida: {num_c2} {saida}\n")
+
+    conversor = tk.Tk()
+    conversor.title("Conversores")
+
+    def selected_option(entrada, saida):
+        # Update conversion logic based on selected units
+        pass
+
+    option_entry = ["rad", "deg", "m", "cm", "nm", "km", "mm", "um", "pm", "eV", "J", "cal", "kcal", "BTU", "kWh", "Wh", "Hz", "kHz", "MHz", "GHz", "THz"]
+    option_out = ["rad", "deg", "m", "cm", "nm", "km", "mm", "um", "pm", "eV", "J", "cal", "kcal", "BTU", "kWh", "Wh", "Hz", "kHz", "MHz", "GHz", "THz"]
+
+    container = tk.Frame(conversor)
+    container.pack()
+
+    selected_1 = tk.StringVar()
+    selected_1.set(option_entry[0])
+
+    selected_2 = tk.StringVar()
+    selected_2.set(option_out[0])
+
+    description_1 = tk.Label(container, text="Entrada")
+    description_1.pack(side=tk.LEFT)
+
+    dropdown1 = tk.OptionMenu(container, selected_1, *option_entry, command=selected_option)
+    dropdown1.pack(side=tk.LEFT)
+
+    description_2 = tk.Label(container, text="Saída")
+    description_2.pack(side=tk.LEFT)
+
+    dropdown2 = tk.OptionMenu(container, selected_2, *option_out, command=selected_option)
+    dropdown2.pack(side=tk.LEFT)
+
+    entry = tk.Entry(container)
+    entry.pack(side=tk.LEFT)
+
+    convert_button = tk.Button(container, text="Converter", command=convertendo)
+    convert_button.pack(side=tk.LEFT)
+
+    frame_saida = tk.Frame(conversor)
+    frame_saida.pack()
+    label_saida = tk.Label(frame_saida, text="Saída:")
+    label_saida.pack()
+    text_area_saida = tk.Text(frame_saida, width=40, height=1)
+    text_area_saida.pack()
+
+    frame_historico = tk.Frame(conversor)
+    frame_historico.pack()
+    label_historico = tk.Label(frame_historico, text="Historico:")
+    label_historico.pack()
+    text_area_historico = tk.Text(frame_historico, width=40, height=4)
+    text_area_historico.pack()
 
     conversor.mainloop()
 
 ################################################## NÃO MEXA ##################################################
                                             #Funções de Simulação
 ################################################## NÃO MEXA ##################################################
-
-
 
 def plot_wave_and_probability_functions(l, ni, nf):
     x = np.linspace(0, l, 400)
@@ -925,9 +1153,6 @@ def plot_wave_and_probability_functions(l, ni, nf):
 
     plt.tight_layout()
     plt.show()
-
-
-
 
 def show_quantum_jumps(ni, nf, l):
     fig, ax = plt.subplots()
@@ -978,39 +1203,25 @@ def show_quantum_jumps(ni, nf, l):
     canvas.draw()
     canvas.get_tk_widget().pack()
 
-
-
-
-
-
-
-
-
 ####################################################################################################
                                             #Função Main
 ####################################################################################################
 
-
-
 def main():
     menu = tk.Menu(janela)
-    # menu.add_command(label="Simulador", command=simulador)
-    # menu.add_command(label="Caixa 1D", command=caixa_1d)
-    # menu.add_command(label="Conversores", command=conversores)
-    
+ 
     menu.add_command(label="Simulador", command=simulador)
     menu.add_command(label="Caixa 1D", command=caixa_1d)
 
-      # # Janela secundária
+    # Janelas de conversores
     submenu_conversores = tk.Menu(menu, tearoff=0)
+    submenu_conversores.add_command(label="Conversor Geral", command=conversor_geral)
     submenu_conversores.add_command(label="m / cm / nm / km / mm / um / pm", command=conversor_1)
     submenu_conversores.add_command(label="eV / J / cal / kcal / BTU / kWh / Wh", command=conversor_2)  
     submenu_conversores.add_command(label="Hz / kHz / MHz / GHz / THz", command=conversor_3)
     submenu_conversores.add_command(label="rad / deg", command=conversor_4)
     menu.add_cascade(label="Conversores", menu=submenu_conversores)
 
-    # janela.config(menu=menu)
-    # janela.mainloop()
     menu.add_separator()  # Adiciona uma linha separadora
     menu.add_command(label="Sair", command=janela.quit)
     janela.config(menu=menu)
