@@ -1058,16 +1058,21 @@ def conversor_geral():
 # Funções de simulação
 
 def plot_wave_and_probability_functions(l, ni, nf):
+    # Definindo o domínio x
     x = np.linspace(0, l, 400)
     
+    # Funções de onda para os estados inicial e final
     psi_ni = np.sqrt(2/l) * np.sin(ni * np.pi * x / l)
     psi_nf = np.sqrt(2/l) * np.sin(nf * np.pi * x / l)
     
+    # Calculando as distribuições de probabilidade
     probability_ni = psi_ni**2
     probability_nf = psi_nf**2
 
+    # Criando uma figura com 2x2 subplots
     fig, axes = plt.subplots(2, 2, figsize=(12, 8))
     
+    # Plotando as funções de onda
     axes[0, 0].plot(x, psi_ni, label=f'ψ(x) para Ni = {ni}')
     axes[0, 0].set_title(f'Função de Onda para Ni = {ni}')
     axes[0, 0].set_xlabel('x (m)')
@@ -1080,21 +1085,25 @@ def plot_wave_and_probability_functions(l, ni, nf):
     axes[0, 1].set_ylabel('ψ(x)')
     axes[0, 1].legend()
 
-    axes[1, 0].plot(x, probability_ni, label=f'P(x) para Ni = {ni}')
+    # Plotando e sombreando as distribuições de probabilidade
+    axes[1, 0].plot(x, probability_ni, label=f'Distribuição de Probabilidade para Ni = {ni}')
+    axes[1, 0].fill_between(x, probability_ni, alpha=0.3)  # Sombreamento
     axes[1, 0].set_title(f'Distribuição de Probabilidade para Ni = {ni}')
     axes[1, 0].set_xlabel('x (m)')
-    axes[1, 0].set_ylabel('ψ²(x)')
+    axes[1, 0].set_ylabel('|\u03C8(x)|²')
     axes[1, 0].legend()
 
-    axes[1, 1].plot(x, probability_nf, label=f'P(x) para Nf = {nf}')
+    axes[1, 1].plot(x, probability_nf, label=f'Distribuição de Probabilidade para Nf = {nf}')
+    axes[1, 1].fill_between(x, probability_nf, alpha=0.3)  # Sombreamento
     axes[1, 1].set_title(f'Distribuição de Probabilidade para Nf = {nf}')
     axes[1, 1].set_xlabel('x (m)')
-    axes[1, 1].set_ylabel('ψ²(x)')
+    axes[1, 1].set_ylabel('|\u03C8(x)|²')
     axes[1, 1].legend()
 
+    # Organizando os gráficos e mostrando o resultado
     plt.tight_layout()
     plt.show()
-
+    
 def show_quantum_jumps(ni, nf, l):
     fig, ax = plt.subplots()
     
@@ -1105,7 +1114,7 @@ def show_quantum_jumps(ni, nf, l):
     ax.set_xlabel('x (nm)')
     ax.set_title('Simulação de Saltos Quânticos com Emissão e Absorção de Fótons')
 
-  
+    # Desenho das linhas representando os níveis de energia
     for level in energy_levels:
         ax.hlines(level, 0, l, colors='blue', linestyles='--')
 
@@ -1113,7 +1122,6 @@ def show_quantum_jumps(ni, nf, l):
     photon, = ax.plot([], [], 'y-', linewidth=2, label='Fóton Emitido/Absorvido')
     ax.legend(loc='upper right')
 
-   
     current_level = ni - 1 
 
     def init():
@@ -1129,20 +1137,24 @@ def show_quantum_jumps(ni, nf, l):
         elif frame > 5: 
             current_level = random.choice(range(len(energy_levels)))
 
-        particle.set_data(l/2, energy_levels[current_level])
+        # Cálculo do valor de X para cada frame
+        x_position = (frame / 60) * l
+
+        particle.set_data(x_position, energy_levels[current_level])
         if current_level != previous_level: 
-            photon.set_data([l/2, l/2], [energy_levels[previous_level], energy_levels[current_level]])
+            photon.set_data([x_position, x_position], [energy_levels[previous_level], energy_levels[current_level]])
         else:
             photon.set_data([], [])
         return particle, photon,
 
-    ani = FuncAnimation(fig, update, frames=np.arange(0, 50), init_func=init, blit=True, interval=1000, repeat=True)
+    ani = FuncAnimation(fig, update, frames=np.arange(0, 61), init_func=init, blit=True, interval=1000, repeat=True)
 
     window = tk.Toplevel()
     window.title("Animação de Saltos Quânticos")
     canvas = FigureCanvasTkAgg(fig, master=window)
     canvas.draw()
     canvas.get_tk_widget().pack()
+
 
 # Função principal
 def main():
