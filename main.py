@@ -373,12 +373,6 @@ def simulador():
         except ValueError:
             messagebox.showerror("Erro de Entrada", "Por favor, insira valores numéricos válidos.")
 
-    def graficos():
-        print("Gráficos")
-
-    def simular():
-        print("Simulação")
-
     m = 1.67 * (10 ** -27)
 
     simulador = tk.Tk()
@@ -409,14 +403,14 @@ def simulador():
     frame_saida.pack()
     label_saida = tk.Label(frame_saida, text="Saída:")
     label_saida.pack()
-    text_area_saida = tk.Text(frame_saida, width=60, height=20)
+    text_area_saida = tk.Text(frame_saida, width=60, height=16)
     text_area_saida.pack()
 
     frame_historico = tk.Frame(simulador)
     frame_historico.pack()
     label_historico = tk.Label(frame_historico, text="Historico:")
     label_historico.pack()
-    text_area_historico = tk.Text(frame_historico, width=60, height=20)
+    text_area_historico = tk.Text(frame_historico, width=60, height=18)
     text_area_historico.pack()
 
     simulador.mainloop()
@@ -437,7 +431,7 @@ def caixa_1d():
             p = probalidade_2()
             # prob = 2 / l * (sin(n * pi * xp) ** 2)
             text_area_saida.delete(1.0, tk.END)
-            text_area_saida.insert(tk.END,"----------------\nResultados:\n----------------\n"
+            text_area_saida.insert(tk.END,"Resultados:\n----------------\n"
                                            f"Largura da caixa: {l:.4e} m\n"
                                            f"Número quântico da partícula: {n}\n"
                                            f"Probabilidade de encontrar a partícula na posição {xp}: {p:.3}\n")
@@ -491,7 +485,7 @@ def caixa_1d():
     frame_saida.pack()
     label_saida = tk.Label(frame_saida, text="Saída:")
     label_saida.pack()
-    text_area_saida = tk.Text(frame_saida, width=60, height=10)
+    text_area_saida = tk.Text(frame_saida, width=60, height=6)
     text_area_saida.pack()
 
     frame_historico = tk.Frame(caixa)
@@ -1043,7 +1037,7 @@ def conversor_geral():
     frame_saida.pack()
     label_saida = tk.Label(frame_saida, text="Saída:")
     label_saida.pack()
-    text_area_saida = tk.Text(frame_saida, width=40, height=1)
+    text_area_saida = tk.Text(frame_saida, width=40, height=2)
     text_area_saida.pack()
 
     frame_historico = tk.Frame(conversor)
