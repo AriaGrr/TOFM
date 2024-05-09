@@ -1204,6 +1204,18 @@ def main():
 
     menu.add_separator()  # Adiciona uma linha separadora
     menu.add_command(label="Sair", command=janela.quit)
+
+    container = tk.Frame(janela)
+    container.pack()
+
+    label = tk.Label(container, text="\nIntegrantes da equipe 3: \n\n"
+                                    "1. Marjorie Luize Martins Costa\n"
+                                    "2. Matheus Ferreira de Freitas\n"
+                                    "3. Henrique Hodel Babler\n")
+    label.pack()
+
+
+
     janela.config(menu=menu)
     janela.mainloop()
 
