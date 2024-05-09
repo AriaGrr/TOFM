@@ -27,13 +27,15 @@ frame_saida = None
 
 # Constantes
 hj = 6.626 * (10 ** -34)  # Constante de Planck em J.s
-hev = 4.136 * (10 ** -15)  # Constante de Planck em eV.s
+hev = 4.136*10**-15  # Constante de Planck em eV.s
 c = 3 * 10 ** 8  # Velocidade da luz no vácuo em m/s
 
 l = 0  # Largura da caixa
 ni = 0  # n inicial da partícula
 nf = 0  # n final da partícula
 n = 0 
+
+E = 0  # Energia do fóton
 
 # Probabilidade de encontrar a partícula entre a e b P(a <= x <= b) = 2/l * sin(n * pi * x / l) ** 2 (Integral)
 
@@ -216,7 +218,10 @@ def lamb(): # Função para calcular o comprimento de onda
     return lamb
 
 def freq(): # Função para calcular a frequência
-    f = e_f() / hev
+    # f = (ef_ev() - ei_ev()) / hev
+    # f = e_f() / hev
+    # f = c / lamb()
+    f = E / hev
     return f
 
 def calcular_vi(): # Função para calcular a velocidade inicial
@@ -307,7 +312,7 @@ def labels_and_entries(parent):
 def simulador():
     global m
     def processar_1():
-        global l, ni, nf, a, b, m
+        global l, ni, nf, a, b, m, E
         try:
             l = float(entrada_l.get())
             ni = float(entrada_ni.get())
@@ -321,11 +326,11 @@ def simulador():
             efev = ef_ev()
             E = e_f()
             lam = lamb()
-            f = freq()
             vi = calcular_vi()
             vf = calcular_vf()
             ci = calcular_ci()
             cf = calcular_cf()
+            fF = freq()
             ki = calcular_ki()
             kf = calcular_kf()
             area = sqrt(2/l)
@@ -341,7 +346,7 @@ def simulador():
                                   f"E {nf} = {efj:.4e} J ou {efev:.4e} eV\n"
                                   f"Energia (Efóton) = {E:.4e} eV\n"
                                   f"Comprimento de onda do fóton = {lam:.4e} m\n"
-                                  f"Frequência do fóton (f) = {f:.4e} Hz\n"
+                                  f"Frequência do fóton (f) = {fF:.4e} Hz\n"
                                   f"Velocidade da partícula (v):\nn = {ni}: v = {vi:.4e} m/s\nn = {nf}: v = {vf:.4e} m/s\n"
                                   f"Comprimento de onda de De Broglie:\nn = {ni}: ƛ = {ci:.4e} m\nn = {nf}: ƛ = {cf:.4e} m\n"
                                   f"A probabilidade da partícula estar entre {a:.4e} e {b:.4e} no nível {ni} é de {i*100:.3f} %\n"
@@ -894,7 +899,7 @@ def conversor_4():
 def conversor_geral():
     global num, num_c, num_c2
     def convertendo():
-        print("Convertendo")
+        # print("Convertendo")
         global num, num_c, num_c2
         
         entrada = selected_1.get()
@@ -989,8 +994,8 @@ def conversor_geral():
         elif entrada == 'rad' or entrada == 'deg':
             num_c2 = num_c
         else:
-            num_c2 = num_c
-            print("Erro de conversão")
+             num_c2 = num_c
+             print("Erro de conversão?")
         
         text_area_saida.delete(1.0, tk.END)
         text_area_saida.insert(tk.END, f"Entrada: {num} {entrada}\n"
