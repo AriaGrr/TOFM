@@ -300,11 +300,11 @@ def labels_and_entries(parent):
     tk.Label(parent, text="Dados para probabilidade:\n P(a <= x <= b)").grid(row=6, column=1)
 
     entrada_a = tk.Entry(parent)
-    tk.Label(parent, text="a:").grid(row=7, column=0)
+    tk.Label(parent, text="a em metros:").grid(row=7, column=0)
     entrada_a.grid(row=7, column=1)
 
     entrada_b = tk.Entry(parent)
-    tk.Label(parent, text="b:").grid(row=8, column=0)
+    tk.Label(parent, text="b em metros:").grid(row=8, column=0)
     entrada_b.grid(row=8, column=1)
 
 # Funções de interface
@@ -480,9 +480,29 @@ def caixa_1d():
     entrada_a.grid(row=2, column=1)
     label_k = tk.Label(frame_entrada, text="k em m:")
     label_k.grid(row=3, column=0)
+
+## Imbutir conversores?
+
+    # def selected_option(entrada):
+    #     pass
+
+    # option_entry = ["m", "nm", "cm", "km", "mm", "um", "pm"]
+
+
+    # selected_1 = tk.StringVar()
+    # selected_1.set(option_entry[0])
+
+    # description_1 = tk.Label(frame_entrada, text="un")
+    # description_1.grid(row=2, column=2)
+
+    # dropdown1 = tk.OptionMenu(frame_entrada, selected_1, *option_entry, command=selected_option)
+    # dropdown1.grid(row=2, column=3)
+
+###
+
     entrada_k = tk.Entry(frame_entrada)
     entrada_k.grid(row=3, column=1)
-    label_xp = tk.Label(frame_entrada, text="Posição de x (que multiplique L):")
+    label_xp = tk.Label(frame_entrada, text="Posição de x (multiplica L):")
     label_xp.grid(row=4, column=0)
     entrada_xp = tk.Entry(frame_entrada)
     entrada_xp.grid(row=4, column=1)
