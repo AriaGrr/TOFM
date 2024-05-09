@@ -995,8 +995,21 @@ def conversor_geral():
             num_c2 = num_c
         else:
              num_c2 = num_c
-             print("Erro de conversão?")
+            #  print("Erro de conversão?")
         
+        if (entrada == saida):
+            num_c2 = num_c
+        elif (entrada == 'm' or entrada == 'cm' or entrada == 'nm' or entrada == 'km' or entrada == 'mm' or entrada == 'um' or entrada == 'pm') and (saida == 'rad' or saida == 'deg' or saida == 'eV' or saida == 'J' or saida == 'cal' or saida == 'kcal' or saida == 'BTU' or saida == 'kWh' or saida == 'Wh' or saida == 'Hz' or saida == 'kHz' or saida == 'MHz' or saida == 'GHz' or saida == 'THz'):
+            print("Erro de conversão")
+        elif (entrada == 'rad' or entrada == 'deg') and (saida == 'm' or saida == 'cm' or saida == 'nm' or saida == 'km' or saida == 'mm' or saida == 'um' or saida == 'pm'):
+            print("Erro de conversão")
+        elif (entrada == 'eV' or entrada == 'J' or entrada == 'cal' or entrada == 'kcal' or entrada == 'BTU' or entrada == 'kWh' or entrada == 'Wh') and (saida == 'rad' or saida == 'deg' or saida == 'Hz' or saida == 'kHz' or saida == 'MHz' or saida == 'GHz' or saida == 'THz'):
+            print("Erro de conversão")
+        elif (entrada == 'Hz' or entrada == 'kHz' or entrada == 'MHz' or entrada == 'GHz' or entrada == 'THz') and (saida == 'm' or saida == 'cm' or saida == 'nm' or saida == 'km' or saida == 'mm' or saida == 'um' or saida == 'pm'):
+            print("Erro de conversão")
+        else:
+            print("Conversão realizada com sucesso")
+
         text_area_saida.delete(1.0, tk.END)
         text_area_saida.insert(tk.END, f"Entrada: {num} {entrada}\n"
                                         f"Saida: {num_c2} {saida}\n")
