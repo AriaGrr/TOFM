@@ -560,7 +560,7 @@ def conversor_1():
   conversor = tk.Tk()
   conversor.title("m / cm / nm / km / mm / um / pm")
 
-  def selected_option(entrada, saida):
+  def selected_option(entrada):
     pass
 
   option_entry = ["m", "cm", "nm", "km", "mm", "um", "pm"]
@@ -664,7 +664,7 @@ def conversor_2():
   conversor = tk.Tk()
   conversor.title("eV / J / cal / kcal / BTU / kWh / Wh")
 
-  def selected_option(entrada, saida):
+  def selected_option(entrada):
     pass
 
   option_entry = ["eV", "J", "cal", "kcal", "BTU", "kWh", "Wh"]
@@ -773,7 +773,7 @@ def conversor_3():
   conversor = tk.Tk()
   conversor.title("Hz / kHz / MHz / GHz / THzh")
 
-  def selected_option(entrada, saida):
+  def selected_option(entrada):
     pass
 
   option_entry = ["Hz", "kHz", "MHz", "GHz", "THz"]
@@ -857,7 +857,7 @@ def conversor_4():
     conversor = tk.Tk()
     conversor.title("rad / deg")
 
-    def selected_option(entrada, saida):
+    def selected_option(entrada):
         pass
 
     option_entry = ["rad", "deg"]
@@ -1007,7 +1007,7 @@ def conversor_geral():
     conversor = tk.Tk()
     conversor.title("Conversores")
 
-    def selected_option(entrada, saida):
+    def selected_option(entrada):
         pass
 
     option_entry = ["rad", "deg", "m", "cm", "nm", "km", "mm", "um", "pm", "eV", "J", "cal", "kcal", "BTU", "kWh", "Wh", "Hz", "kHz", "MHz", "GHz", "THz"]
