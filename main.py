@@ -340,17 +340,17 @@ def simulador():
             text_area_saida.delete(1.0, tk.END)
             text_area_saida.insert(tk.END,
                                   f"Resultados:\n----------------\n"
-                                  f"ψ {ni} (x) = {area:.4e} . sen({(ki):.4e}.x)\n"
-                                  f"ψ {nf} (x) = {area:.4e} . sen({(kf):.4e}.x)\n"
-                                  f"E {ni} = {eij:.4e} J ou {eiev:.4e} eV\n"
-                                  f"E {nf} = {efj:.4e} J ou {efev:.4e} eV\n"
-                                  f"Energia (Efóton) = {E:.4e} eV\n"
-                                  f"Comprimento de onda do fóton = {lam:.4e} m\n"
-                                  f"Frequência do fóton (f) = {fF:.4e} Hz\n"
-                                  f"Velocidade da partícula (v):\nn = {ni}: v = {vi:.4e} m/s\nn = {nf}: v = {vf:.4e} m/s\n"
-                                  f"Comprimento de onda de De Broglie:\nn = {ni}: ƛ = {ci:.4e} m\nn = {nf}: ƛ = {cf:.4e} m\n"
-                                  f"A probabilidade da partícula estar entre {a:.4e} e {b:.4e} no nível {ni} é de {i*100:.3f} %\n"
-                                  f"A probabilidade da partícula estar entre {a:.4e} e {b:.4e} no nível {nf} é de {f*100:.3f} %\n")
+                                  f"ψ {ni} (x) = {area:.3e} . sen({(ki):.3e}.x)\n"
+                                  f"ψ {nf} (x) = {area:.3e} . sen({(kf):.3e}.x)\n"
+                                  f"E {ni} = {eij:.3e} J ou {eiev:.3e} eV\n"
+                                  f"E {nf} = {efj:.3e} J ou {efev:.3e} eV\n"
+                                  f"Energia (Efóton) = {E:.3e} eV\n"
+                                  f"Comprimento de onda do fóton = {lam:.3e} m\n"
+                                  f"Frequência do fóton (f) = {fF:.3e} Hz\n"
+                                  f"Velocidade da partícula (v):\nn = {ni}: v = {vi:.3e} m/s\nn = {nf}: v = {vf:.3e} m/s\n"
+                                  f"Comprimento de onda de De Broglie:\nn = {ni}: ƛ = {ci:.3e} m\nn = {nf}: ƛ = {cf:.3e} m\n"
+                                  f"A probabilidade da partícula estar entre {a:.3e} e {b:.3e} no nível {ni} é de {i*100:.3f} %\n"
+                                  f"A probabilidade da partícula estar entre {a:.3e} e {b:.3e} no nível {nf} é de {f*100:.3f} %\n")
             
             if m == 1.67 * (10 ** -27):
                 tipo = "próton"
@@ -364,17 +364,17 @@ def simulador():
                                            f"a: {a}\n"
                                            f"b: {b}\n"
                                            f"----------------\nResultados:\n----------------\n"
-                                  f"ψ {ni} (x) = {area:.4e} . sen({(ki):.4e}.x)\n"
-                                  f"ψ {nf} (x) = {area:.4e} . sen({(kf):.4e}.x)\n"
-                                  f"E {ni} = {eij:.4e} J ou {eiev:.4e} eV\n"
-                                  f"E {nf} = {efj:.4e} J ou {efev:.4e} eV\n"
-                                  f"Energia (Efóton) = {E:.4e} eV\n"
-                                  f"Comprimento de onda do fóton = {lam:.4e} m\n"
-                                  f"Frequência do fóton (f) = {f:.4e} Hz\n"
-                                  f"Velocidade da partícula (v):\nn = {ni}: v = {vi:.4e} m/s\nn = {nf}: v = {vf:.4e} m/s\n"
-                                  f"Comprimento de onda de De Broglie:\nn = {ni}: ƛ = {ci:.4e} m\nn = {nf}: ƛ = {cf:.4e} m\n"
-                                  f"A probabilidade da partícula estar entre {a:.4e} e {b:.4e} no nível {ni} é de {i*100:.3f} %\n"
-                                  f"A probabilidade da partícula estar entre {a:.4e} e {b:.4e} no nível {nf} é de {f*100:.3f} %\n")
+                                  f"ψ {ni} (x) = {area:.3e} . sen({(ki):.3e}.x)\n"
+                                  f"ψ {nf} (x) = {area:.3e} . sen({(kf):.3e}.x)\n"
+                                  f"E {ni} = {eij:.3e} J ou {eiev:.3e} eV\n"
+                                  f"E {nf} = {efj:.3e} J ou {efev:.3e} eV\n"
+                                  f"Energia (Efóton) = {E:.3e} eV\n"
+                                  f"Comprimento de onda do fóton = {lam:.3e} m\n"
+                                  f"Frequência do fóton (f) = {f:.3e} Hz\n"
+                                  f"Velocidade da partícula (v):\nn = {ni}: v = {vi:.3e} m/s\nn = {nf}: v = {vf:.3e} m/s\n"
+                                  f"Comprimento de onda de De Broglie:\nn = {ni}: ƛ = {ci:.3e} m\nn = {nf}: ƛ = {cf:.3e} m\n"
+                                  f"A probabilidade da partícula estar entre {a:.3e} e {b:.3e} no nível {ni} é de {i*100:.3f} %\n"
+                                  f"A probabilidade da partícula estar entre {a:.3e} e {b:.3e} no nível {nf} é de {f*100:.3f} %\n")
                         # plot_wave_functions(a, b, ni, nf, l)
             # plot_probability_distribution(a, b, ni, nf, l)
         except ValueError:
@@ -439,7 +439,7 @@ def caixa_1d():
             # prob = 2 / l * (sin(n * pi * xp) ** 2)
             text_area_saida.delete(1.0, tk.END)
             text_area_saida.insert(tk.END,"Resultados:\n----------------\n"
-                                           f"Largura da caixa: {l:.4e} m\n"
+                                           f"Largura da caixa: {l:.3e} m\n"
                                            f"Número quântico da partícula: {n}\n"
                                            f"Probabilidade de encontrar a partícula na posição {xp}: {p:.3}\n")
             if m == 1.67 * (10 ** -27):
@@ -452,7 +452,7 @@ def caixa_1d():
                                         f"K: {k}\n"
                                         f"Posição de x: {xp}\n"
                                         f"----------------\nResultados:\n----------------\n"
-                                        f"Largura da caixa: {l:.4e} m\n"
+                                        f"Largura da caixa: {l:.3e} m\n"
                                         f"Número quântico da partícula: {n}\n"
                                         f"Probabilidade de encontrar a partícula na posição {xp}: {p:.3}\n")
         except ValueError as e:
