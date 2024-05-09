@@ -218,9 +218,6 @@ def lamb(): # Função para calcular o comprimento de onda
     return lamb
 
 def freq(): # Função para calcular a frequência
-    # f = (ef_ev() - ei_ev()) / hev
-    # f = e_f() / hev
-    # f = c / lamb()
     f = E / hev
     return f
 
@@ -375,8 +372,7 @@ def simulador():
                                   f"Comprimento de onda de De Broglie:\nn = {ni}: ƛ = {ci:.3e} m\nn = {nf}: ƛ = {cf:.3e} m\n"
                                   f"A probabilidade da partícula estar entre {a:.3e} e {b:.3e} no nível {ni} é de {i*100:.3f} %\n"
                                   f"A probabilidade da partícula estar entre {a:.3e} e {b:.3e} no nível {nf} é de {f*100:.3f} %\n")
-                        # plot_wave_functions(a, b, ni, nf, l)
-            # plot_probability_distribution(a, b, ni, nf, l)
+
         except ValueError:
             messagebox.showerror("Erro de Entrada", "Por favor, insira valores numéricos válidos.")
 
