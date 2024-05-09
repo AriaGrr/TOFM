@@ -335,14 +335,15 @@ def simulador():
             text_area_saida.delete(1.0, tk.END)
             text_area_saida.insert(tk.END,
                                   f"Resultados:\n----------------\n"
-                                  f"ψ{nf} (x) = {area:.4e} . sen({(kf):.4e}.x)\n"
-                                  f"E{ni} = {eij:.4e} J ou {eiev:.4e} eV\n"
-                                  f"E{nf} = {efj:.4e} J ou {efev:.4e} eV\n"
-                                  f"Efoton = {E:.4e} eV\n"
+                                  f"ψ {ni} (x) = {area:.4e} . sen({(ki):.4e}.x)\n"
+                                  f"ψ {nf} (x) = {area:.4e} . sen({(kf):.4e}.x)\n"
+                                  f"E {ni} = {eij:.4e} J ou {eiev:.4e} eV\n"
+                                  f"E {nf} = {efj:.4e} J ou {efev:.4e} eV\n"
+                                  f"Energia (Efóton) = {E:.4e} eV\n"
                                   f"Comprimento de onda do fóton = {lam:.4e} m\n"
-                                  f"Frequência do fóton = {f:.4e} Hz\n"
-                                  f"Velocidade da partícula:\nn = {ni}: v = {vi:.4e} m/s\tn = {nf}: v = {vf:.4e} m/s\n"
-                                  f"Comprimento de onda de De Broglie:\nn = {ni}: ƛ = {ci:.4e} m\tn = {nf}: ƛ = {cf:.4e} m\n"
+                                  f"Frequência do fóton (f) = {f:.4e} Hz\n"
+                                  f"Velocidade da partícula (v):\nn = {ni}: v = {vi:.4e} m/s\nn = {nf}: v = {vf:.4e} m/s\n"
+                                  f"Comprimento de onda de De Broglie:\nn = {ni}: ƛ = {ci:.4e} m\nn = {nf}: ƛ = {cf:.4e} m\n"
                                   f"A probabilidade da partícula estar entre {a:.4e} e {b:.4e} no nível {ni} é de {i*100:.3f} %\n"
                                   f"A probabilidade da partícula estar entre {a:.4e} e {b:.4e} no nível {nf} é de {f*100:.3f} %\n")
             
@@ -356,16 +357,17 @@ def simulador():
                                            f"n inicial da partícula (Ni): {ni}\n"
                                            f"n final da partícula (Nf): {nf}\n"
                                            f"a: {a}\n"
-                                           f"b: {b}\n"f"ψ{ni} (x) = {area:.4e} . sen({(ki):.4e}.x)\n"
+                                           f"b: {b}\n"
                                            f"----------------\nResultados:\n----------------\n"
-                                  f"ψ{nf} (x) = {area:.4e} . sen({(kf):.4e}.x)\n"
-                                  f"E{ni} = {eij:.4e} J ou {eiev:.4e} eV\n"
-                                  f"E{nf} = {efj:.4e} J ou {efev:.4e} eV\n"
-                                  f"Efoton = {E:.4e} eV\n"
+                                  f"ψ {ni} (x) = {area:.4e} . sen({(ki):.4e}.x)\n"
+                                  f"ψ {nf} (x) = {area:.4e} . sen({(kf):.4e}.x)\n"
+                                  f"E {ni} = {eij:.4e} J ou {eiev:.4e} eV\n"
+                                  f"E {nf} = {efj:.4e} J ou {efev:.4e} eV\n"
+                                  f"Energia (Efóton) = {E:.4e} eV\n"
                                   f"Comprimento de onda do fóton = {lam:.4e} m\n"
-                                  f"Frequência do fóton = {f:.4e} Hz\n"
-                                  f"Velocidade da partícula:\nn = {ni}: v = {vi:.4e} m/s\tn = {nf}: v = {vf:.4e} m/s\n"
-                                  f"Comprimento de onda de De Broglie:\nn = {ni}: ƛ = {ci:.4e} m\tn = {nf}: ƛ = {cf:.4e} m\n"
+                                  f"Frequência do fóton (f) = {f:.4e} Hz\n"
+                                  f"Velocidade da partícula (v):\nn = {ni}: v = {vi:.4e} m/s\nn = {nf}: v = {vf:.4e} m/s\n"
+                                  f"Comprimento de onda de De Broglie:\nn = {ni}: ƛ = {ci:.4e} m\nn = {nf}: ƛ = {cf:.4e} m\n"
                                   f"A probabilidade da partícula estar entre {a:.4e} e {b:.4e} no nível {ni} é de {i*100:.3f} %\n"
                                   f"A probabilidade da partícula estar entre {a:.4e} e {b:.4e} no nível {nf} é de {f*100:.3f} %\n")
                         # plot_wave_functions(a, b, ni, nf, l)
@@ -403,14 +405,14 @@ def simulador():
     frame_saida.pack()
     label_saida = tk.Label(frame_saida, text="Saída:")
     label_saida.pack()
-    text_area_saida = tk.Text(frame_saida, width=60, height=16)
+    text_area_saida = tk.Text(frame_saida, width=60, height=19)
     text_area_saida.pack()
 
     frame_historico = tk.Frame(simulador)
     frame_historico.pack()
     label_historico = tk.Label(frame_historico, text="Historico:")
     label_historico.pack()
-    text_area_historico = tk.Text(frame_historico, width=60, height=18)
+    text_area_historico = tk.Text(frame_historico, width=60, height=12)
     text_area_historico.pack()
 
     simulador.mainloop()
