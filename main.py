@@ -311,11 +311,29 @@ def simulador():
     def processar_1():
         global l, ni, nf, a, b, m, E
         try:
-            l = float(entrada_l.get())
+            
             ni = float(entrada_ni.get())
             nf = float(entrada_nf.get())
+            # Verifica se os valores de entrada são válidos (mensagem de erro)
+            if ni < 1 or nf < 1:
+                messagebox.showerror("Erro de Entrada", "Os níveis inicial e final devem ser maiores que 0.")
+                return
+            
+            if ni == nf:
+                messagebox.showerror("Erro de Entrada", "Os níveis inicial e final não podem ser iguais.")
+                return
+
+            l = float(entrada_l.get())
             a = float(entrada_a.get())
             b = float(entrada_b.get())
+
+            if a > b:
+                messagebox.showerror("Erro de Entrada", "O valor de a deve ser menor que b.")
+                return
+
+            if l == 0:
+                messagebox.showerror("Erro de Entrada", "O valor de L não pode ser 0.")
+                return
 
             eij = ei_j()
             eiev = ei_ev()
@@ -333,6 +351,13 @@ def simulador():
             area = sqrt(2/l)
             i = probabilidade(a, b, ni, l)
             f = probabilidade(a, b, nf, l)
+            
+            if ni < nf:
+                foton = "absorvido"
+            elif ni > nf:
+                foton = "emitido"
+            else:
+                foton = "nulo"
 
             text_area_saida.delete(1.0, tk.END)
             text_area_saida.insert(tk.END,
@@ -341,6 +366,7 @@ def simulador():
                                   f"ψ {nf} (x) = {area:.3e} . sen({(kf):.3e}.x)\n"
                                   f"E {ni} = {eij:.3e} J ou {eiev:.3e} eV\n"
                                   f"E {nf} = {efj:.3e} J ou {efev:.3e} eV\n"
+                                  f"Fóton {foton}:\n"
                                   f"Energia (Efóton) = {E:.3e} eV\n"
                                   f"Comprimento de onda do fóton = {lam:.3e} m\n"
                                   f"Frequência do fóton (f) = {fF:.3e} Hz\n"
@@ -365,6 +391,7 @@ def simulador():
                                   f"ψ {nf} (x) = {area:.3e} . sen({(kf):.3e}.x)\n"
                                   f"E {ni} = {eij:.3e} J ou {eiev:.3e} eV\n"
                                   f"E {nf} = {efj:.3e} J ou {efev:.3e} eV\n"
+                                  f"Fóton {foton}:\n"
                                   f"Energia (Efóton) = {E:.3e} eV\n"
                                   f"Comprimento de onda do fóton = {lam:.3e} m\n"
                                   f"Frequência do fóton (f) = {f:.3e} Hz\n"
@@ -428,6 +455,11 @@ def caixa_1d():
             a = float(entrada_a.get())
             k = float(entrada_k.get())
             xp = float(entrada_xp.get())
+
+            if a == 0 or k == 0 or xp == 0:
+                messagebox.showerror("Erro de Entrada", "Os valores de entrada não podem ser 0.")
+                return
+            
 
             l = l_func()
             n = n_func()
@@ -1213,8 +1245,6 @@ def main():
                                     "2. Matheus Ferreira de Freitas\n"
                                     "3. Henrique Hodel Babler\n")
     label.pack()
-
-
 
     janela.config(menu=menu)
     janela.mainloop()
